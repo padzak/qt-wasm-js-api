@@ -1,0 +1,205 @@
+let wsUrl = new String("");
+let devices = new Map();
+let selectionLabels = [];
+
+function setWebSocketUrl(pointer, offset) {
+  // wsUrl = qtLoader.module().UTF8ToString(pointer, offset);
+  wsUrl = "ws://192.168.1.9:8888";
+  console.log(wsUrl);
+}
+
+function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {
+  let deviceTypeWithId = deviceType.toString() + "-" + deviceId.toString();
+  console.log(deviceTypeWithId);
+  label = qtLoader.module().UTF8ToString(ptrLabel, labelOffset);
+  console.log(label);
+  unit = qtLoader.module().UTF8ToString(ptrUnit, unitOffset);
+  console.log(unit);
+  
+  if (devices.has(deviceTypeWithId)) {
+    devices.get(deviceTypeWithId).get('signals').push(signalId);
+    devices.get(deviceTypeWithId).get('labels').push(label);
+    devices.get(deviceTypeWithId).get('units').push(unit);
+  } 
+  else {
+    let device = new Map();
+    device.set('device', deviceType);
+    device.set('deviceId', deviceId);
+    let signals = [signalId];
+    console.log(signals);
+    device.set('signals', signals);
+    let labels = new Array(label);
+    device.set('labels', labels);
+    let units = new Array(unit);
+    device.set('units', units);
+
+    devices.set(deviceTypeWithId, device);
+  }
+
+  let signal = [deviceType, deviceId, signalId, label];
+  console.log("Signal: " + signal.toString());
+}
+
+function clearSelections() {
+  devices.clear();
+}
+
+
+const toObject = (map = new Map) => 
+  Object.fromEntries
+    ( Array.from
+        ( map.entries()
+        , ([ k, v ]) =>
+            v instanceof Map
+              ? [ k, toObject (v) ]
+              : [ k, v ]
+        )
+    )
+
+function openGraph() {
+  console.log(devices);
+  sessionStorage.setItem('serverAddress', wsUrl);
+
+  const devObject = toObject(devices);
+  const jsonDevices = JSON.stringify(devObject);
+
+  console.log(jsonDevices);
+  sessionStorage.setItem('chartMetadata', jsonDevices);
+   
+  window.open("./build/index.html", '_blank');
+}
+
+function setLabel(pointer, offset) {
+  label = qtLoader.module().UTF8ToString(pointer, offset);
+  console.log(label);
+  selectionLabels.push(label);
+}
+
+
+function testString(pointer, offset) {
+  console.log("testString ptr: " + pointer);
+  console.log("testString offset: " + offset);
+
+  setTimeout(function() {
+    console.log(qtLoader.module().UTF8ToString(pointer, offset));
+  }, 3000);
+
+  console.log(selectionLabels);
+}
+
+// document.addEventListener('keydown', function(event) {
+//   console.log('Key pressed: ' + event.key);
+//   if (event.key == 'a') {
+//     // console.log(qtLoader.module().UTF8ToString(qtLoader.module()._getStr()));
+//     console.log(location)
+//   }
+
+//   if (event.key == 'g') {
+//     console.log("Array test");
+//     let ptr = qtLoader.module()._getArray()
+//     console.log(qtLoader.module()._getArray());
+//     let arrayTest = new Int32Array(qtLoader.module().asm.memory.buffer, ptr, 3);
+//     console.log(arrayTest);
+//   }
+
+// });
+
+function createTextInputPopup() {
+    var popup = document.createElement("div");
+    popup.style.display = "block";
+    popup.style.position = "absolute";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.background = "white";
+    popup.style.padding = "20px";
+    popup.style.border = "1px solid black";
+
+    var textField = document.createElement("input");
+    textField.type = "text";
+    textField.addEventListener("keydown", function(event) {
+        if (event.keyCode === 13) {
+            // Code to handle text input when "Enter" is pressed
+            var inputValue = textField.value;
+            console.log("The input value is: " + inputValue);
+            popup.remove();
+            // code to close the popup
+        }
+    });
+
+    popup.appendChild(textField);
+    document.body.appendChild(popup);
+}
+
+function openLoginPopup() {
+    var popup = document.createElement("div");
+    popup.className = "loginPopup"
+
+    // Username input field
+    var username = document.createElement("div");
+    username.className = "textFieldLabeled"
+    var usernameLabel = document.createElement("label");
+    usernameLabel.innerHTML = "Username:";
+    usernameLabel.className = "textLabel";
+    var usernameInput = document.createElement("input");
+    usernameInput.type = "text";
+    usernameInput.class = "textInput"
+    usernameInput.id = "usernameInput";
+
+    username.appendChild(usernameLabel);
+    username.appendChild(usernameInput);
+
+
+    // Password input field
+    var password = document.createElement("div");
+    password.className = "textFieldLabeled"
+    var passwordLabel = document.createElement("label");
+    passwordLabel.className = "textLabel";
+    passwordLabel.innerHTML = "Password:";
+    var passwordInput = document.createElement("input");
+    passwordInput.type = "password";
+    passwordInput.id = "passwordInput";
+    passwordInput.class = "textInput"
+
+    password.appendChild(passwordLabel);
+    password.appendChild(passwordInput);
+
+    // Log In button
+    var loginButton = document.createElement("button");
+    loginButton.innerHTML = "Log In";
+    loginButton.className = "button"
+    loginButton.addEventListener("click", function() {
+        var username = document.getElementById("usernameInput").value;
+        var password = document.getElementById("passwordInput").value;
+        sendLoginDetails(username, password);
+        popup.remove();
+    });
+
+    // Append elements to the popup
+    popup.appendChild(username);
+    popup.appendChild(password);
+    popup.appendChild(loginButton);
+    document.body.appendChild(popup);
+}
+
+function sendLoginDetails(username, password) {
+  // const ptrUser = allocateUTF8(username);
+  // const userOffset = username.length;
+  // const ptrPass = allocateUTF8(password);
+  // const passOffset = password.length;
+  qtLoader.module().JavaScriptAPI.sendLoginData(username, password);
+  
+
+  console.log("Username: " + username);
+  console.log("Password: " + password);
+}
+
+
+function siemanko() {
+  var instance = qtLoader.module().JavaScriptAPI();
+  instance.sendLoginData();
+  instance.delete();
+}
+
+
+

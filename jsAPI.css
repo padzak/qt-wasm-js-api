@@ -1,0 +1,45 @@
+.loginPopup {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	top: 40%;
+	left: 30%;
+	width: 40%;
+	height: 25%;
+	background: #2B3D5B;
+	padding: 20px;
+	border-radius: 25px;
+	border: 1px solid black;
+}
+
+.textFieldLabeled {
+	/* width: 55%; */
+	width: 370px;
+	display: flex;
+	justify-content: space-between;
+	/* justify-content: center; */
+	color: white;
+	font-size: 30px;
+	padding: 10px;
+}
+
+.textLabel {
+	width: 35%;
+	text-align: right;
+	/* padding: 10px; */
+}
+
+.textInput {
+	font-size: 30px;
+	padding: 10px;
+}
+
+.button {
+	font-size: 20px;
+	padding: 5px 15px;
+	margin-top: 20px;
+}
+
+
