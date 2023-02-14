@@ -8,6 +8,14 @@ function setWebSocketUrl(pointer, offset) {
   console.log(wsUrl);
 }
 
+function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
+  id = qtLoader.module().UTF8ToString(devId, devIdOffset);
+  label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
+  createTextInputPopup((inputText) => {
+    qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
+  });
+}
+
 function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {
   let deviceTypeWithId = deviceType.toString() + "-" + deviceId.toString();
   console.log(deviceTypeWithId);
@@ -104,7 +112,7 @@ function testString(pointer, offset) {
 
 // });
 
-function createTextInputPopup() {
+function createTextInputPopup(callbackFunction) {
     var popup = document.createElement("div");
     popup.style.display = "block";
     popup.style.position = "absolute";
@@ -121,7 +129,7 @@ function createTextInputPopup() {
         if (event.keyCode === 13) {
             // Code to handle text input when "Enter" is pressed
             var inputValue = textField.value;
-            console.log("The input value is: " + inputValue);
+            callbackFunction(inputValue);
             popup.remove();
             // code to close the popup
         }
