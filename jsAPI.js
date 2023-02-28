@@ -19,7 +19,7 @@ function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
 function openSetUnitName(unitName, unitNameOffset) {
   const name = qtLoader.module().UTF8ToString(unitName, unitNameOffset);
   createTextInputPopup((inputText) => {
-    qtLoader.module().JavaScriptAPI.setUnitName(id, inputText);  
+    qtLoader.module().JavaScriptAPI.setUnitName(inputText);  
   }, name);
 }
 
