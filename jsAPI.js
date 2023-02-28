@@ -9,11 +9,18 @@ function setWebSocketUrl(pointer, offset) {
 }
 
 function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
-  id = qtLoader.module().UTF8ToString(devId, devIdOffset);
-  label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
+  const id = qtLoader.module().UTF8ToString(devId, devIdOffset);
+  const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
-  });
+  }, label);
+}
+
+function openSetUnitName(unitName, unitNameOffset) {
+  const name = qtLoader.module().UTF8ToString(unitName, unitNameOffset);
+  createTextInputPopup((inputText) => {
+    qtLoader.module().JavaScriptAPI.setUnitName(id, inputText);  
+  }, name);
 }
 
 function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {
@@ -112,31 +119,33 @@ function testString(pointer, offset) {
 
 // });
 
-function createTextInputPopup(callbackFunction) {
-    var popup = document.createElement("div");
-    popup.style.display = "block";
-    popup.style.position = "absolute";
-    popup.style.top = "50%";
-    popup.style.left = "50%";
-    popup.style.transform = "translate(-50%, -50%)";
-    popup.style.background = "white";
-    popup.style.padding = "20px";
-    popup.style.border = "1px solid black";
+function createTextInputPopup(callbackFunction, defaultText) {
+  defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
+  var popup = document.createElement("div");
+  popup.style.display = "block";
+  popup.style.position = "absolute";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.background = "white";
+  popup.style.padding = "20px";
+  popup.style.border = "1px solid black";
 
-    var textField = document.createElement("input");
-    textField.type = "text";
-    textField.addEventListener("keydown", function(event) {
-        if (event.keyCode === 13) {
-            // Code to handle text input when "Enter" is pressed
-            var inputValue = textField.value;
-            callbackFunction(inputValue);
-            popup.remove();
-            // code to close the popup
-        }
-    });
+  var textField = document.createElement("input");
+  textField.type = "text";
+  textField.value = defaultText;
+  textField.addEventListener("keydown", function(event) {
+      if (event.keyCode === 13) {
+          // Code to handle text input when "Enter" is pressed
+          var inputValue = textField.value;
+          callbackFunction(inputValue);
+          popup.remove();
+          // code to close the popup
+      }
+  });
 
-    popup.appendChild(textField);
-    document.body.appendChild(popup);
+  popup.appendChild(textField);
+  document.body.appendChild(popup);
 }
 
 function openLoginPopup() {
