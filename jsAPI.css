@@ -2,24 +2,23 @@
 
 .loginPopup {
 	font-family: "Open Sans", sans-serif;
+	font-size: 30px;
+	font-weight: 700;
 	position: absolute;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	top: 40%;
-	left: 30%;
-	width: 40%;
-	height: 25%;
+	top: 0%;
+	width: 100%;
+	height: 100%;
 	background: #2B3D5B;
 	padding: 20px;
-	border-radius: 25px;
-	border: 1px solid black;
+
 }
 
 .textFieldLabeled {
-	/* width: 55%; */
-	width: 370px;
+	width: 360px;
 	display: flex;
 	justify-content: space-between;
 	/* justify-content: center; */
@@ -29,14 +28,14 @@
 }
 
 .textLabel {
-	width: 35%;
+	/* width: 35%; */
 	text-align: right;
-	/* padding: 10px; */
+	/* padding-right: 20px; */
 }
 
 .textInput {
-	font-size: 30px;
-	padding: 10px;
+	font-size: 20px;
+	padding-left: 10px;
 }
 
 .button {
@@ -45,4 +44,25 @@
 	margin-top: 20px;
 }
 
+input[type=text] {
+	color: white;
+	width: 220px;
+	margin-left: 10px;
+	font-size: 30px;
+	border: none;
+	border-bottom: 1px solid white;
+	background-color: transparent;
+}
+input[type=password] {
+	color: white;
+	width: 220px;
+	margin-left: 10px;
+	font-size: 30px;
+	border: none;
+	border-bottom: 1px solid white;
+	background-color: transparent;
+}
 
+input:focus {
+	outline: none;
+}
