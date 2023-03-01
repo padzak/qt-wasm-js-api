@@ -144,6 +144,12 @@ function createTextInputPopup(callbackFunction, defaultText) {
       }
   });
 
+  document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      popup.remove();
+    }
+  }, {once: true});
+
   popup.appendChild(textField);
   document.body.appendChild(popup);
 }
@@ -192,6 +198,12 @@ function openLoginPopup() {
         popup.remove();
     });
 
+    document.addEventListener('keydown', function(event) {
+      if (event.key === "Escape") {
+        popup.remove();
+      }
+    }, {once: true});
+
     // Append elements to the popup
     popup.appendChild(username);
     popup.appendChild(password);
@@ -212,11 +224,6 @@ function sendLoginDetails(username, password) {
 }
 
 
-function siemanko() {
-  var instance = qtLoader.module().JavaScriptAPI();
-  instance.sendLoginData();
-  instance.delete();
-}
 
 
 
