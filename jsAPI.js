@@ -90,18 +90,6 @@ function setLabel(pointer, offset) {
   selectionLabels.push(label);
 }
 
-
-function testString(pointer, offset) {
-  console.log("testString ptr: " + pointer);
-  console.log("testString offset: " + offset);
-
-  setTimeout(function() {
-    console.log(qtLoader.module().UTF8ToString(pointer, offset));
-  }, 3000);
-
-  console.log(selectionLabels);
-}
-
 // document.addEventListener('keydown', function(event) {
 //   console.log('Key pressed: ' + event.key);
 //   if (event.key == 'a') {
@@ -118,6 +106,18 @@ function testString(pointer, offset) {
 //   }
 
 // });
+
+function openFirstArgCommand() {
+  createTextInputPopup((inputText) => {
+    qtLoader.module().JavaScriptAPI.setFirstCmdText(inputText);  
+  });
+}
+
+function openSecondArgCommand() { 
+  createTextInputPopup((inputText) => {
+    qtLoader.module().JavaScriptAPI.setSecondCmdText(inputText);  
+  });
+}
 
 function createTextInputPopup(callbackFunction, defaultText) {
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
