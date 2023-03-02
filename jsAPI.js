@@ -144,14 +144,15 @@ function createTextInputPopup(callbackFunction, defaultText) {
       }
   });
 
-  document.addEventListener('keydown', function(event) {
+  popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       popup.remove();
     }
-  }, {once: true});
+  });
 
   popup.appendChild(textField);
   document.body.appendChild(popup);
+  textField.focus();
 }
 
 function openLoginPopup() {
@@ -198,17 +199,18 @@ function openLoginPopup() {
         popup.remove();
     });
 
-    document.addEventListener('keydown', function(event) {
+    popup.addEventListener('keydown', function(event) {
       if (event.key === "Escape") {
         popup.remove();
       }
-    }, {once: true});
+    });
 
     // Append elements to the popup
     popup.appendChild(username);
     popup.appendChild(password);
     popup.appendChild(loginButton);
     document.body.appendChild(popup);
+    usernameInput.focus();
 }
 
 function sendLoginDetails(username, password) {
@@ -290,12 +292,11 @@ function openChangePasswordPopup(user, userOffset) {
       popup.remove();
   });
 
-  document.addEventListener('keydown', function(event) {
+  popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-      console.log("ESCAPE")
       popup.remove();
     }
-  }, {once: true});
+  });
 
   // Append elements to the popup
   popup.appendChild(username);
@@ -304,6 +305,7 @@ function openChangePasswordPopup(user, userOffset) {
   popup.appendChild(confirmPassword);
   popup.appendChild(changePasswordButton);
   document.body.appendChild(popup);
+  currentPasswordInput.focus();
 }
 
 
