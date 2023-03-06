@@ -170,7 +170,7 @@ function openLoginPopup() {
     popup.classList.add("commonPopup", "loginPopup");
     popup.style.width = windowWidth + "px";
     popup.style.height = windowHeight + "px";
-    
+
     // Username input field
     var username = document.createElement("div");
     username.className = "textFieldLabeled"
@@ -216,6 +216,18 @@ function openLoginPopup() {
         popup.remove();
       }
     });
+
+    let firstClick = true;
+    function handleCloseOnClick(event) {
+      if (firstClick) {
+        firstClick = false;
+        return;
+      } else if (!popup.contains(event.target)) {
+        popup.remove();
+        document.removeEventListener('click', handleCloseOnClick);
+      }
+    }
+    document.addEventListener('click', handleCloseOnClick);
 
     // Append elements to the popup
     popup.appendChild(username);
