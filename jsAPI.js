@@ -1,11 +1,21 @@
 let wsUrl = new String("");
 let devices = new Map();
 let selectionLabels = [];
+let windowWidth = 0;
+let windowHeight = 0;
 
 function setWebSocketUrl(pointer, offset) {
   // wsUrl = qtLoader.module().UTF8ToString(pointer, offset);
   wsUrl = "ws://192.168.1.9:8888";
   console.log(wsUrl);
+}
+
+function setWindowHeight(alertBarHeight) { 
+  windowHeight = window.innerHeight - 1.4 * alertBarHeight;
+}
+
+function setWindowWidth(navBarWidth) { 
+  windowWidth = window.innerWidth - 1.325 * navBarWidth;
 }
 
 function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
@@ -108,14 +118,14 @@ function setLabel(pointer, offset) {
 // });
 
 function openFirstArgCommand() {
-  createTextInputPopup((inputText) => {
-    qtLoader.module().JavaScriptAPI.setFirstCmdText(inputText);  
+  createTextInputPopup((value) => {
+    qtLoader.module().JavaScriptAPI.setFirstCmdValue(Number(value));  
   });
 }
 
 function openSecondArgCommand() { 
-  createTextInputPopup((inputText) => {
-    qtLoader.module().JavaScriptAPI.setSecondCmdText(inputText);  
+  createTextInputPopup((value) => {
+    qtLoader.module().JavaScriptAPI.setSecondCmdValue(Number(value));  
   });
 }
 
@@ -157,8 +167,10 @@ function createTextInputPopup(callbackFunction, defaultText) {
 
 function openLoginPopup() {
     var popup = document.createElement("div");
-    popup.className = "loginPopup"
-
+    popup.classList.add("commonPopup", "loginPopup");
+    popup.style.width = windowWidth + "px";
+    popup.style.height = windowHeight + "px";
+    
     // Username input field
     var username = document.createElement("div");
     username.className = "textFieldLabeled"

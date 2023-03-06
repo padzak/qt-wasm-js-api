@@ -1,20 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
-.loginPopup {
+.commonPopup {
 	font-family: "Open Sans", sans-serif;
 	font-size: 30px;
-	font-weight: 700;
+	background: #242C3B;
+	color: white;
+
+}
+
+.loginPopup {
 	position: absolute;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	top: 0%;
-	width: 100%;
-	height: 100%;
-	background: #2B3D5B;
+	bottom: 0;
+	right: 0;
 	padding: 20px;
-
 }
 
 .textFieldLabeled {
