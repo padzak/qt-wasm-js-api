@@ -3,9 +3,12 @@
 .commonPopup {
 	font-family: "Open Sans", sans-serif;
 	font-size: 30px;
-	background: #242C3B;
+	background: #212936;
 	color: white;
+}
 
+.commandPopup {
+	background: #242C3B
 }
 
 .loginPopup {

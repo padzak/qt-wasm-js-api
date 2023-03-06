@@ -182,7 +182,7 @@ function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
   sessionStorage.setItem('popupActive','active');
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
   var popup = document.createElement("div");
-  popup.classList.add("commonPopup")
+  popup.classList.add("commonPopup", "commandPopup");
   popup.style.display = "block";
   popup.style.position = "absolute";
   popup.style.top = "50%";
