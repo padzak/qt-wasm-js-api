@@ -117,17 +117,23 @@ function setLabel(pointer, offset) {
 
 // });
 
-function openFirstArgCommand() {
-  createTextInputPopup((value) => {
+function openFirstArgCommand(label, labelOffset) {
+  let popupLabel = qtLoader.module().UTF8ToString(label, labelOffset);
+  popupLabel = popupLabel.charAt(0).toUpperCase() + popupLabel.slice(1);
+  console.log("Open first argument popup");
+  createLabeledTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setFirstCmdValue(Number(value));  
-  });
+  }, popupLabel);
 }
 
-function openSecondArgCommand() { 
-  createTextInputPopup((value) => {
+function openSecondArgCommand(label, labelOffset) { 
+  let popupLabel = qtLoader.module().UTF8ToString(label, labelOffset);
+  popupLabel = popupLabel.charAt(0).toUpperCase() + popupLabel.slice(1);
+  createLabeledTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setSecondCmdValue(Number(value));  
-  });
+  }, popupLabel);
 }
+
 
 function createTextInputPopup(callbackFunction, defaultText) {
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
@@ -160,6 +166,58 @@ function createTextInputPopup(callbackFunction, defaultText) {
     }
   });
 
+  popup.appendChild(textField);
+  document.body.appendChild(popup);
+  textField.focus();
+}
+
+function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
+
+  var isActive = sessionStorage.getItem("popupActive");
+  if (isActive == 'active') {
+    console.log("Popup already active");
+    return;
+  }
+
+  sessionStorage.setItem('popupActive','active');
+  defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
+  var popup = document.createElement("div");
+  popup.classList.add("commonPopup")
+  popup.style.display = "block";
+  popup.style.position = "absolute";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+
+  var textLabel = document.createElement("label");
+  textLabel.innerHTML = label;
+  textLabel.classList.add("textLabel");
+  var textField = document.createElement("input");
+  textField.type = "text";
+  textField.classList.add("settingsTextField");
+  textField.value = defaultText;
+  textField.addEventListener("keydown", function(event) {
+      if (event.keyCode === 13) {
+          // Code to handle text input when "Enter" is pressed
+          var inputValue = textField.value;
+          console.log("The input value is: " + inputValue);
+          callbackFunction(inputValue);
+          popup.remove();
+          sessionStorage.setItem('popupActive','inactive');
+
+          // code to close the popup
+      }
+  });
+
+  popup.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      console.log("ESCAPE")
+      popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
+    }
+  });
+
+  popup.appendChild(textLabel);
   popup.appendChild(textField);
   document.body.appendChild(popup);
   textField.focus();
