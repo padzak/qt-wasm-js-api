@@ -18,6 +18,13 @@ function setWindowWidth(navBarWidth) {
   windowWidth = window.innerWidth - 1.325 * navBarWidth;
 }
 
+function setCurrentSensor(sensor, sensorOffset) {
+  const sensorQt = qtLoader.module().UTF8ToString(sensor, sensorOffset);
+  sessionStorage.setItem('currentSensor', sensorQt);
+  let storedSensor = sessionStorage.getItem('currentSensor');
+  console.log("Stored sensor: " + storedSensor);
+}
+
 function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
   const id = qtLoader.module().UTF8ToString(devId, devIdOffset);
   const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
