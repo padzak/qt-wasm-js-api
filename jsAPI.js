@@ -21,8 +21,14 @@ function setWindowWidth(navBarWidth) {
 function setCurrentSensor(sensor, sensorOffset) {
   const sensorQt = qtLoader.module().UTF8ToString(sensor, sensorOffset);
   sessionStorage.setItem('currentSensor', sensorQt);
-  let storedSensor = sessionStorage.getItem('currentSensor');
-  console.log("Stored sensor: " + storedSensor);
+}
+
+function openSetStripSensor(value, index, name, nameOffset) {
+  const sensorId = sessionStorage.getItem('currentSensor');
+  const propName = qtLoader.module().UTF8ToString(name, nameOffset);
+  createTextInputPopup((inputValue) => {
+    qtLoader.module().JavaScriptAPI.setStripSensor(sensorId, index, propName, Number(inputValue));  
+  }, value);
 }
 
 function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
