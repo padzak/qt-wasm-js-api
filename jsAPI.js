@@ -241,17 +241,15 @@ function openLoginPopup() {
     return;
   }
   sessionStorage.setItem('popupActive','active');
-
+  
   var popup = document.createElement("div");
-  fetch('loginPopup.html')
-  .then(response => response.text())
-  .then(text => popup.innerHTML = text);
   popup.classList.add("commonPopup", "loginPopup");
   popup.style.width = windowWidth + "px";
   popup.style.height = windowHeight + "px";
-
-  // Set event handlers
-  setTimeout(function () {
+  fetch('loginPopup.html')
+  .then(response => response.text())
+  .then(text => popup.innerHTML = text)
+  .then(() => {
     var loginButton = document.getElementById("loginButton");
     loginButton.addEventListener("click", function() { 
         var username = document.getElementById("usernameInput").value;
@@ -260,7 +258,9 @@ function openLoginPopup() {
         popup.remove();
         sessionStorage.setItem('popupActive','inactive');
     });
-  }, 500);
+    let input = document.getElementById("usernameInput");
+    input.focus();
+  });
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
@@ -280,13 +280,9 @@ function openLoginPopup() {
       document.removeEventListener('click', handleCloseOnClick);
     }
   }
-
   document.addEventListener('click', handleCloseOnClick);
+
   document.body.appendChild(popup);
-  setTimeout(() => {
-    let input = document.getElementById("usernameInput");
-    input.focus();
-  }, 500);
 }
 
 function sendLoginDetails(username, password) {
@@ -299,7 +295,7 @@ function openChangePasswordPopup(user, userOffset) {
     return;
   }
   sessionStorage.setItem('popupActive','active');
-
+  
   const userName = qtLoader.module().UTF8ToString(user, userOffset);
   var popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
@@ -308,36 +304,40 @@ function openChangePasswordPopup(user, userOffset) {
 
   fetch('changePasswordPopup.html')
   .then(response => response.text())
-  .then(text => popup.innerHTML = text);
-
-  setTimeout(() => {
+  .then(text => popup.innerHTML = text)
+  .then(() => {
     document.getElementById("usernameDisplay").innerHTML = userName;
-  }, 500);
-
-  // Set event handlers
-  setTimeout(() =>{
     var changePassword = document.getElementById("changePassButton");
     changePassword.addEventListener("click", function() {
       var newPassword = document.getElementById("newPassword").value;
       console.log("new password: " + newPassword);
-      // sendLoginDetails(username, password);
+      // TODO Validate & send pasword change  
       popup.remove();
       sessionStorage.setItem('popupActive','inactive');
+    });
+    var currentPassword = document.getElementById("currentPassword");
+    currentPassword.focus();
   });
-  }, 500);
+
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       popup.remove();
       sessionStorage.setItem('popupActive','inactive');
     }
   });
-
-  document.body.appendChild(popup);
-  
-  setTimeout(() => {
-    var currentPassword = document.getElementById("currentPassword");
-    currentPassword.focus();
-  }, 500);
+  let firstClick = true;
+  function handleCloseOnClick(event) {
+    if (firstClick) {
+      firstClick = false;
+      return;
+    } else if (!popup.contains(event.target)) {
+      popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
+      document.removeEventListener('click', handleCloseOnClick);
+    }
+  }
+  document.addEventListener('click', handleCloseOnClick);
+  document.body.appendChild(popup); 
 }
 
 
