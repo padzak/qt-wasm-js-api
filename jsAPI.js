@@ -21,14 +21,8 @@ function setWindowWidth(navBarWidth) {
 function setCurrentSensor(sensor, sensorOffset) {
   const sensorQt = qtLoader.module().UTF8ToString(sensor, sensorOffset);
   sessionStorage.setItem('currentSensor', sensorQt);
-}
-
-function openSetStripSensor(value, index, name, nameOffset) {
-  const sensorId = sessionStorage.getItem('currentSensor');
-  const propName = qtLoader.module().UTF8ToString(name, nameOffset);
-  createTextInputPopup((inputValue) => {
-    qtLoader.module().JavaScriptAPI.setStripSensor(sensorId, index, propName, Number(inputValue));  
-  }, value);
+  let storedSensor = sessionStorage.getItem('currentSensor');
+  console.log("Stored sensor: " + storedSensor);
 }
 
 function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
@@ -237,75 +231,50 @@ function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
 }
 
 function openLoginPopup() {
-    var popup = document.createElement("div");
-    popup.classList.add("commonPopup", "loginPopup");
-    popup.style.width = windowWidth + "px";
-    popup.style.height = windowHeight + "px";
+  var popup = document.createElement("div");
 
-    // Username input field
-    var username = document.createElement("div");
-    username.className = "textFieldLabeled"
-    var usernameLabel = document.createElement("label");
-    usernameLabel.innerHTML = "Username";
-    usernameLabel.className = "textLabel";
-    var usernameInput = document.createElement("input");
-    usernameInput.type = "text";
-    usernameInput.class = "textInput"
-    usernameInput.id = "usernameInput";
+  fetch('loginPopup.html')
+  .then(response => response.text())
+  .then(text => popup.innerHTML = text);
 
-    username.appendChild(usernameLabel);
-    username.appendChild(usernameInput);
+  popup.classList.add("commonPopup", "loginPopup");
+  popup.style.width = windowWidth + "px";
+  popup.style.height = windowHeight + "px";
 
-
-    // Password input field
-    var password = document.createElement("div");
-    password.className = "textFieldLabeled"
-    var passwordLabel = document.createElement("label");
-    passwordLabel.className = "textLabel";
-    passwordLabel.innerHTML = "Password";
-    var passwordInput = document.createElement("input");
-    passwordInput.type = "password";
-    passwordInput.id = "passwordInput";
-    passwordInput.class = "textInput"
-
-    password.appendChild(passwordLabel);
-    password.appendChild(passwordInput);
-
-    // Log In button
-    var loginButton = document.createElement("button");
-    loginButton.innerHTML = "Log In";
-    loginButton.className = "button"
-    loginButton.addEventListener("click", function() {
+  // Set event handlers
+  setTimeout(function () {
+    var loginButton = document.getElementById("loginButton");
+    loginButton.addEventListener("click", function() { 
         var username = document.getElementById("usernameInput").value;
         var password = document.getElementById("passwordInput").value;
         sendLoginDetails(username, password);
         popup.remove();
     });
+  }, 500);
 
-    popup.addEventListener('keydown', function(event) {
-      if (event.key === "Escape") {
-        popup.remove();
-      }
-    });
-
-    let firstClick = true;
-    function handleCloseOnClick(event) {
-      if (firstClick) {
-        firstClick = false;
-        return;
-      } else if (!popup.contains(event.target)) {
-        popup.remove();
-        document.removeEventListener('click', handleCloseOnClick);
-      }
+  popup.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      popup.remove();
     }
-    document.addEventListener('click', handleCloseOnClick);
+  });
 
-    // Append elements to the popup
-    popup.appendChild(username);
-    popup.appendChild(password);
-    popup.appendChild(loginButton);
-    document.body.appendChild(popup);
-    usernameInput.focus();
+  let firstClick = true;
+  function handleCloseOnClick(event) {
+    if (firstClick) {
+      firstClick = false;
+      return;
+    } else if (!popup.contains(event.target)) {
+      popup.remove();
+      document.removeEventListener('click', handleCloseOnClick);
+    }
+  }
+
+  document.addEventListener('click', handleCloseOnClick);
+  document.body.appendChild(popup);
+  setTimeout(() => {
+    let input = document.getElementById("usernameInput");
+    input.focus();
+  }, 500);
 }
 
 function sendLoginDetails(username, password) {
