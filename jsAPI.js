@@ -143,6 +143,12 @@ function openSecondArgCommand(label, labelOffset) {
 
 
 function createTextInputPopup(callbackFunction, defaultText) {
+  var isActive = sessionStorage.getItem("popupActive");
+  if (isActive == 'active') {
+    return;
+  }
+  sessionStorage.setItem('popupActive','active');
+
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
   var popup = document.createElement("div");
   popup.style.display = "block";
@@ -163,6 +169,7 @@ function createTextInputPopup(callbackFunction, defaultText) {
           var inputValue = textField.value;
           callbackFunction(inputValue);
           popup.remove();
+          sessionStorage.setItem('popupActive','inactive');
           // code to close the popup
       }
   });
@@ -170,6 +177,7 @@ function createTextInputPopup(callbackFunction, defaultText) {
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
     }
   });
 
@@ -179,14 +187,13 @@ function createTextInputPopup(callbackFunction, defaultText) {
 }
 
 function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
-
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
     console.log("Popup already active");
     return;
   }
-
   sessionStorage.setItem('popupActive','active');
+
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
   var popup = document.createElement("div");
   popup.classList.add("commonPopup", "commandPopup");
@@ -212,13 +219,11 @@ function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
           popup.remove();
           sessionStorage.setItem('popupActive','inactive');
 
-          // code to close the popup
       }
   });
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-      console.log("ESCAPE")
       popup.remove();
       sessionStorage.setItem('popupActive','inactive');
     }
@@ -231,12 +236,16 @@ function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
 }
 
 function openLoginPopup() {
-  var popup = document.createElement("div");
+  var isActive = sessionStorage.getItem("popupActive");
+  if (isActive == 'active') {
+    return;
+  }
+  sessionStorage.setItem('popupActive','active');
 
+  var popup = document.createElement("div");
   fetch('loginPopup.html')
   .then(response => response.text())
   .then(text => popup.innerHTML = text);
-
   popup.classList.add("commonPopup", "loginPopup");
   popup.style.width = windowWidth + "px";
   popup.style.height = windowHeight + "px";
@@ -249,12 +258,14 @@ function openLoginPopup() {
         var password = document.getElementById("passwordInput").value;
         sendLoginDetails(username, password);
         popup.remove();
+        sessionStorage.setItem('popupActive','inactive');
     });
   }, 500);
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
     }
   });
 
@@ -265,6 +276,7 @@ function openLoginPopup() {
       return;
     } else if (!popup.contains(event.target)) {
       popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
       document.removeEventListener('click', handleCloseOnClick);
     }
   }
@@ -282,6 +294,12 @@ function sendLoginDetails(username, password) {
 }
 
 function openChangePasswordPopup(user, userOffset) {
+  var isActive = sessionStorage.getItem("popupActive");
+  if (isActive == 'active') {
+    return;
+  }
+  sessionStorage.setItem('popupActive','active');
+
   const userName = qtLoader.module().UTF8ToString(user, userOffset);
   var popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
@@ -304,11 +322,13 @@ function openChangePasswordPopup(user, userOffset) {
       console.log("new password: " + newPassword);
       // sendLoginDetails(username, password);
       popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
   });
   }, 500);
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
     }
   });
 
