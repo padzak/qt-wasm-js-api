@@ -20,9 +20,9 @@
 	bottom: 0;
 	right: 0;
 	padding: 20px;
-  }
+}
 
-.loginMain {
+.popupMain {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -30,9 +30,9 @@
 	bottom: 0;
 	right: 0;
 	padding: 20px;
-  }
+}
 
-  .textFieldLabeled {
+.textFieldLabeled {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
@@ -40,7 +40,7 @@
 	color: #ffffff;
 	font-size: 25px;
 	padding: 10px;
-  }
+}
 
 .textLabel {
 	flex: 1;
@@ -82,7 +82,6 @@
 	height: 100%;
 }
   
-
 input[type="text"] {
   	width: 220px;
   	margin-left: 10px;

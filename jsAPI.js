@@ -278,98 +278,46 @@ function openLoginPopup() {
 }
 
 function sendLoginDetails(username, password) {
-  // const ptrUser = allocateUTF8(username);
-  // const userOffset = username.length;
-  // const ptrPass = allocateUTF8(password);
-  // const passOffset = password.length;
-  qtLoader.module().JavaScriptAPI.sendLoginData(username, password);
-  
-
-  console.log("Username: " + username);
-  console.log("Password: " + password);
+  qtLoader.module().JavaScriptAPI.sendLoginData(username, password);  
 }
-
 
 function openChangePasswordPopup(user, userOffset) {
   const userName = qtLoader.module().UTF8ToString(user, userOffset);
   var popup = document.createElement("div");
-  popup.className = "loginPopup"
+  popup.classList.add("commonPopup", "loginPopup");
+  popup.style.width = windowWidth + "px";
+  popup.style.height = windowHeight + "px";
 
-  // Username input field
-  var username = document.createElement("div");
-  username.className = "textFieldLabeled"
-  var usernameLabel = document.createElement("label");
-  usernameLabel.innerHTML = "Username";
-  usernameLabel.className = "textLabel";
-  var usernameDisplay = document.createElement("label");
-  usernameDisplay.innerHTML = userName;
-  usernameDisplay.className = "simpleText";
-  username.appendChild(usernameLabel);
-  username.appendChild(usernameDisplay);
+  fetch('changePasswordPopup.html')
+  .then(response => response.text())
+  .then(text => popup.innerHTML = text);
 
-  // Current Password input field
-  var currentPassword = document.createElement("div");
-  currentPassword.className = "textFieldLabeled"
-  var currentPasswordLabel = document.createElement("label");
-  currentPasswordLabel.className = "textLabel";
-  currentPasswordLabel.innerHTML = "Current Password";
-  var currentPasswordInput = document.createElement("input");
-  currentPasswordInput.type = "password";
-  currentPasswordInput.id = "currentPasswordInput";
-  currentPasswordInput.class = "textInput"
-  currentPassword.appendChild(currentPasswordLabel);
-  currentPassword.appendChild(currentPasswordInput);
+  setTimeout(() => {
+    document.getElementById("usernameDisplay").innerHTML = userName;
+  }, 500);
 
-  // New Password input field
-  var newPassword = document.createElement("div");
-  newPassword.className = "textFieldLabeled"
-  var newPasswordLabel = document.createElement("label");
-  newPasswordLabel.className = "textLabel";
-  newPasswordLabel.innerHTML = "New Password";
-  var newPasswordInput = document.createElement("input");
-  newPasswordInput.type = "password";
-  newPasswordInput.id = "newPasswordInput";
-  newPasswordInput.class = "textInput"
-  newPassword.appendChild(newPasswordLabel);
-  newPassword.appendChild(newPasswordInput);
-
-  // Confirm Password input field
-  var confirmPassword = document.createElement("div");
-  confirmPassword.className = "textFieldLabeled"
-  var confirmPasswordLabel = document.createElement("label");
-  confirmPasswordLabel.className = "textLabel";
-  confirmPasswordLabel.innerHTML = "Confirm Password";
-  var confirmPasswordInput = document.createElement("input");
-  confirmPasswordInput.type = "password";
-  confirmPasswordInput.id = "confirmPasswordInput";
-  confirmPasswordInput.class = "textInput"
-  confirmPassword.appendChild(confirmPasswordLabel);
-  confirmPassword.appendChild(confirmPasswordInput);
-
-  // Change Password button
-  var changePasswordButton = document.createElement("button");
-  changePasswordButton.innerHTML = "Change Password";
-  changePasswordButton.className = "button"
-  changePasswordButton.addEventListener("click", function() {
-      var newPassword = document.getElementById("newPasswordInput").value;
+  // Set event handlers
+  setTimeout(() =>{
+    var changePassword = document.getElementById("changePassButton");
+    changePassword.addEventListener("click", function() {
+      var newPassword = document.getElementById("newPassword").value;
+      console.log("new password: " + newPassword);
       // sendLoginDetails(username, password);
       popup.remove();
   });
-
+  }, 500);
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       popup.remove();
     }
   });
 
-  // Append elements to the popup
-  popup.appendChild(username);
-  popup.appendChild(currentPassword);
-  popup.appendChild(newPassword);
-  popup.appendChild(confirmPassword);
-  popup.appendChild(changePasswordButton);
   document.body.appendChild(popup);
-  currentPasswordInput.focus();
+  
+  setTimeout(() => {
+    var currentPassword = document.getElementById("currentPassword");
+    currentPassword.focus();
+  }, 500);
 }
 
 
