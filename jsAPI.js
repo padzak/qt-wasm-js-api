@@ -13,11 +13,11 @@ function setWebSocketUrl(pointer, offset) {
 }
 
 function setWindowHeight(alertBarHeight) { 
-  windowHeight = window.innerHeight - 1.4 * alertBarHeight;
+  windowHeight = window.innerHeight - alertBarHeight;
 }
 
 function setWindowWidth(navBarWidth) { 
-  windowWidth = window.innerWidth - 1.325 * navBarWidth;
+  windowWidth = window.innerWidth - navBarWidth;
 }
 
 function setCurrentSensor(sensor, sensorOffset) {
