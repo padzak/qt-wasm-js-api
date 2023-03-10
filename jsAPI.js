@@ -3,6 +3,8 @@ let devices = new Map();
 let selectionLabels = [];
 let windowWidth = 0;
 let windowHeight = 0;
+var popup;
+sessionStorage.setItem('popupActive','inactive');
 
 function setWebSocketUrl(pointer, offset) {
   // wsUrl = qtLoader.module().UTF8ToString(pointer, offset);
@@ -150,7 +152,7 @@ function createTextInputPopup(callbackFunction, defaultText) {
   sessionStorage.setItem('popupActive','active');
 
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
-  var popup = document.createElement("div");
+  popup = document.createElement("div");
   popup.style.display = "block";
   popup.style.position = "absolute";
   popup.style.top = "50%";
@@ -195,7 +197,7 @@ function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
   sessionStorage.setItem('popupActive','active');
 
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
-  var popup = document.createElement("div");
+  popup = document.createElement("div");
   popup.classList.add("commonPopup", "commandPopup");
   popup.style.display = "block";
   popup.style.position = "absolute";
@@ -242,7 +244,7 @@ function openLoginPopup() {
   }
   sessionStorage.setItem('popupActive','active');
   
-  var popup = document.createElement("div");
+  popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
   popup.style.width = windowWidth + "px";
   popup.style.height = windowHeight + "px";
@@ -297,7 +299,7 @@ function openChangePasswordPopup(user, userOffset) {
   sessionStorage.setItem('popupActive','active');
   
   const userName = qtLoader.module().UTF8ToString(user, userOffset);
-  var popup = document.createElement("div");
+  popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
   popup.style.width = windowWidth + "px";
   popup.style.height = windowHeight + "px";
@@ -338,6 +340,15 @@ function openChangePasswordPopup(user, userOffset) {
   }
   document.addEventListener('click', handleCloseOnClick);
   document.body.appendChild(popup); 
+}
+
+function clearPopups() {
+  let active = sessionStorage.getItem('popupActive');
+  if (active == 'inactive')
+    return;
+
+  popup.remove();
+  sessionStorage.setItem('popupActive','inactive');
 }
 
 
