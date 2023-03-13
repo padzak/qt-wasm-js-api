@@ -230,11 +230,13 @@ function openLoginPopup() {
   popup.classList.add("commonPopup", "loginPopup");
   popup.style.width = windowWidth + "px";
   popup.style.height = windowHeight + "px";
+
   fetch('loginPopup.html')
   .then(response => response.text())
   .then(text => popup.innerHTML = text)
   .then(() => {
     var loginButton = document.getElementById("loginButton");
+    loginButton.disabled = true;
     loginButton.addEventListener("click", function() { 
         var username = document.getElementById("usernameInput").value;
         var password = document.getElementById("passwordInput").value;
@@ -242,8 +244,20 @@ function openLoginPopup() {
         popup.remove();
         sessionStorage.setItem('popupActive','inactive');
     });
-    let input = document.getElementById("usernameInput");
-    input.focus();
+    var nameInput = document.getElementById("usernameInput");
+    nameInput.focus();
+    var passInput = document.getElementById("passwordInput");
+    function checkInputs() {
+      if (nameInput.value === '' || passInput.value === '') {
+        loginButton.disabled = true;
+      } 
+      else {
+        loginButton.disabled = false;
+      }
+    }
+    
+    nameInput.addEventListener('keyup', checkInputs);
+    passInput.addEventListener('keyup', checkInputs);
   });
 
   popup.addEventListener('keydown', function(event) {
