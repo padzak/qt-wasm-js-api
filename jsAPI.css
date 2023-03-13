@@ -103,6 +103,10 @@
 	width: 220px;
 }
 
+.dropDown {
+	font-size: 25px;
+}
+
 input[type="text"] {
   	margin-left: 10px;
   	border: none;
