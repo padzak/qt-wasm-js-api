@@ -24,22 +24,29 @@ function setCurrentSensor(sensor, sensorOffset) {
   const sensorQt = qtLoader.module().UTF8ToString(sensor, sensorOffset);
   sessionStorage.setItem('currentSensor', sensorQt);
   let storedSensor = sessionStorage.getItem('currentSensor');
-  console.log("Stored sensor: " + storedSensor);
 }
 
-function openSetLabel(devId, devIdOffset, devLabel, devLabelOffset) {
+function openSetStripSensor(x, y, value, index, name, nameOffset) {
+  const sensorId = sessionStorage.getItem('currentSensor');
+  const propName = qtLoader.module().UTF8ToString(name, nameOffset);
+  createTextInputPopup((inputValue) => {
+    qtLoader.module().JavaScriptAPI.setStripSensor(sensorId, index, propName, Number(inputValue));  
+  }, value, x, y);
+}
+
+function openSetLabel(x, y, devId, devIdOffset, devLabel, devLabelOffset) {
   const id = qtLoader.module().UTF8ToString(devId, devIdOffset);
   const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
-  }, label);
+  }, label, x, y);
 }
 
-function openSetUnitName(unitName, unitNameOffset) {
+function openSetUnitName(x, y, unitName, unitNameOffset) {
   const name = qtLoader.module().UTF8ToString(unitName, unitNameOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setUnitName(inputText);  
-  }, name);
+  }, name, x, y);
 }
 
 function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {
@@ -105,7 +112,6 @@ function openGraph() {
 
 function setLabel(pointer, offset) {
   label = qtLoader.module().UTF8ToString(pointer, offset);
-  console.log(label);
   selectionLabels.push(label);
 }
 
@@ -126,25 +132,20 @@ function setLabel(pointer, offset) {
 
 // });
 
-function openFirstArgCommand(label, labelOffset) {
-  let popupLabel = qtLoader.module().UTF8ToString(label, labelOffset);
-  popupLabel = popupLabel.charAt(0).toUpperCase() + popupLabel.slice(1);
+function openFirstArgCommand(x, y) {
   console.log("Open first argument popup");
-  createLabeledTextInputPopup((value) => {
+  createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setFirstCmdValue(Number(value));  
-  }, popupLabel);
+  }, "", x, y);
 }
 
-function openSecondArgCommand(label, labelOffset) { 
-  let popupLabel = qtLoader.module().UTF8ToString(label, labelOffset);
-  popupLabel = popupLabel.charAt(0).toUpperCase() + popupLabel.slice(1);
-  createLabeledTextInputPopup((value) => {
+function openSecondArgCommand(x, y) { 
+  createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setSecondCmdValue(Number(value));  
-  }, popupLabel);
+  }, "", x ,y);
 }
 
-
-function createTextInputPopup(callbackFunction, defaultText) {
+function createTextInputPopup(callbackFunction, defaultText, x, y) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
     return;
@@ -153,17 +154,19 @@ function createTextInputPopup(callbackFunction, defaultText) {
 
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
   popup = document.createElement("div");
+  popup.classList.add("commonPopup")
+
+  if (x !== 'undefined' && y !== 'undefined') {
+    popup.style.right = x + "px";
+    popup.style.bottom = y + "px";
+  }
+
   popup.style.display = "block";
   popup.style.position = "absolute";
-  popup.style.top = "50%";
-  popup.style.left = "50%";
-  popup.style.transform = "translate(-50%, -50%)";
-  popup.style.background = "white";
-  popup.style.padding = "20px";
-  popup.style.border = "1px solid black";
 
   var textField = document.createElement("input");
   textField.type = "text";
+  textField.classList.add("settingsTextField");
   textField.value = defaultText;
   textField.addEventListener("keydown", function(event) {
       if (event.keyCode === 13) {
@@ -191,7 +194,6 @@ function createTextInputPopup(callbackFunction, defaultText) {
 function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
-    console.log("Popup already active");
     return;
   }
   sessionStorage.setItem('popupActive','active');
@@ -216,7 +218,6 @@ function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
       if (event.keyCode === 13) {
           // Code to handle text input when "Enter" is pressed
           var inputValue = textField.value;
-          console.log("The input value is: " + inputValue);
           callbackFunction(inputValue);
           popup.remove();
           sessionStorage.setItem('popupActive','inactive');
@@ -312,7 +313,6 @@ function openChangePasswordPopup(user, userOffset) {
     var changePassword = document.getElementById("changePassButton");
     changePassword.addEventListener("click", function() {
       var newPassword = document.getElementById("newPassword").value;
-      console.log("new password: " + newPassword);
       // TODO Validate & send pasword change  
       popup.remove();
       sessionStorage.setItem('popupActive','inactive');
