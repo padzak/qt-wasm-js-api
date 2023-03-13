@@ -9,9 +9,9 @@ sed -i '' -e '/<meta charset="utf-8">/a\
 ' ui.html
 
 sed -i '' -e '/<script type="text\/javascript" src="qtloader.js"><\/script>/a\
-    <script type="text\/javascript" src="jsAPI.js"><\/script>
+    <script type="text\/javascript" src="./scripts/jsAPI.js"><\/script>
 ' ui.html
 
 sed -i '' -e '/<script type="text\/javascript" src="qtloader.js"><\/script>/a\
-    <script type="text\/javascript" src="audioAlarm.js"><\/script>
+    <script type="text\/javascript" src="./scripts/audioAlarm.js"><\/script>
 ' ui.html

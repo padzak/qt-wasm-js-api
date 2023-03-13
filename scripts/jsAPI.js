@@ -337,6 +337,73 @@ function openChangePasswordPopup(user, userOffset) {
   document.body.appendChild(popup); 
 }
 
+function openAddUserPopup() {
+  var isActive = sessionStorage.getItem("popupActive");
+  if (isActive == 'active') {
+    return;
+  }
+  sessionStorage.setItem('popupActive','active');
+  
+  popup = document.createElement("div");
+  popup.classList.add("commonPopup", "loginPopup");
+  popup.style.width = windowWidth + "px";
+  popup.style.height = windowHeight + "px";
+
+  fetch('./html/popups/addNewUser.html')
+  .then(response => response.text())
+  .then(text => popup.innerHTML = text)
+  .then(() => {
+    var loginButton = document.getElementById("loginButton");
+    loginButton.disabled = true;
+    loginButton.addEventListener("click", function() { 
+        var username = document.getElementById("usernameInput").value;
+        var password = document.getElementById("newPassword").value;
+        sendLoginDetails(username, password);
+        popup.remove();
+        sessionStorage.setItem('popupActive','inactive');
+    });
+    var nameInput = document.getElementById("usernameInput");
+    nameInput.focus();
+    var passInput = document.getElementById("newPassword");
+    var passConfirm = document.getElementById("confirmPassword");
+    function checkInputs() {
+      if (nameInput.value === '' 
+          || passInput.value === ''
+          || passConfirm === '') {
+        loginButton.disabled = true;
+      } 
+      else {
+        loginButton.disabled = false;
+      }
+    }
+    
+    nameInput.addEventListener('keyup', checkInputs);
+    passInput.addEventListener('keyup', checkInputs);
+  });
+
+  popup.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
+    }
+  });
+
+  let firstClick = true;
+  function handleCloseOnClick(event) {
+    if (firstClick) {
+      firstClick = false;
+      return;
+    } else if (!popup.contains(event.target)) {
+      popup.remove();
+      sessionStorage.setItem('popupActive','inactive');
+      document.removeEventListener('click', handleCloseOnClick);
+    }
+  }
+  document.addEventListener('click', handleCloseOnClick);
+
+  document.body.appendChild(popup);
+}
+
 function clearPopups() {
   let active = sessionStorage.getItem('popupActive');
   if (active == 'inactive')
