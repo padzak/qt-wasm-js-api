@@ -115,25 +115,7 @@ function setLabel(pointer, offset) {
   selectionLabels.push(label);
 }
 
-// document.addEventListener('keydown', function(event) {
-//   console.log('Key pressed: ' + event.key);
-//   if (event.key == 'a') {
-//     // console.log(qtLoader.module().UTF8ToString(qtLoader.module()._getStr()));
-//     console.log(location)
-//   }
-
-//   if (event.key == 'g') {
-//     console.log("Array test");
-//     let ptr = qtLoader.module()._getArray()
-//     console.log(qtLoader.module()._getArray());
-//     let arrayTest = new Int32Array(qtLoader.module().asm.memory.buffer, ptr, 3);
-//     console.log(arrayTest);
-//   }
-
-// });
-
 function openFirstArgCommand(x, y) {
-  console.log("Open first argument popup");
   createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setFirstCmdValue(Number(value));  
   }, "", x, y);
