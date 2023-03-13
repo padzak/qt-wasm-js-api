@@ -34,12 +34,12 @@ function openSetStripSensor(x, y, value, index, name, nameOffset) {
   }, value, x, y);
 }
 
-function openSetLabel(x, y, devId, devIdOffset, devLabel, devLabelOffset) {
+function openSetLabel(x, y, width, devId, devIdOffset, devLabel, devLabelOffset) {
   const id = qtLoader.module().UTF8ToString(devId, devIdOffset);
   const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
-  }, label, x, y);
+  }, label, x, y, width);
 }
 
 function openSetUnitName(x, y, unitName, unitNameOffset) {
@@ -85,7 +85,6 @@ function clearSelections() {
   devices.clear();
 }
 
-
 const toObject = (map = new Map) => 
   Object.fromEntries
     ( Array.from
@@ -127,24 +126,24 @@ function openSecondArgCommand(x, y) {
   }, "", x ,y);
 }
 
-function createTextInputPopup(callbackFunction, defaultText, x, y) {
+function createTextInputPopup(callbackFunction, defaultText, x, y, width) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
     return;
   }
   sessionStorage.setItem('popupActive','active');
-
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
   popup = document.createElement("div");
-  popup.classList.add("commonPopup")
-
+  popup.classList.add("commonPopup", "textInputPopup");
   if (x !== 'undefined' && y !== 'undefined') {
-    popup.style.right = x + "px";
-    popup.style.bottom = y + "px";
+    popup.style.left = x + "px";
+    popup.style.top = y + "px";
   }
 
-  popup.style.display = "block";
-  popup.style.position = "absolute";
+  if (width !== 'undefined') {
+    console.log("Setting width: " + width);
+    popup.style.width = width + "px";
+  }
 
   var textField = document.createElement("input");
   textField.type = "text";
@@ -328,7 +327,6 @@ function clearPopups() {
   let active = sessionStorage.getItem('popupActive');
   if (active == 'inactive')
     return;
-
   popup.remove();
   sessionStorage.setItem('popupActive','inactive');
 }
