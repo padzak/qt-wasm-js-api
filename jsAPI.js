@@ -231,7 +231,7 @@ function openLoginPopup() {
   popup.style.width = windowWidth + "px";
   popup.style.height = windowHeight + "px";
 
-  fetch('loginPopup.html')
+  fetch('./html/popups/loginPopup.html')
   .then(response => response.text())
   .then(text => popup.innerHTML = text)
   .then(() => {
@@ -300,7 +300,7 @@ function openChangePasswordPopup(user, userOffset) {
   popup.style.width = windowWidth + "px";
   popup.style.height = windowHeight + "px";
 
-  fetch('changePasswordPopup.html')
+  fetch('./html/popups/changePasswordPopup.html')
   .then(response => response.text())
   .then(text => popup.innerHTML = text)
   .then(() => {
