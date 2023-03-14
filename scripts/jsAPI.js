@@ -305,6 +305,8 @@ function openChangePasswordPopup(user, userOffset) {
     changePassword.disabled = true;
     changePassword.addEventListener("click", function() {
       var newPassword = document.getElementById("newPassword").value;
+      var currPassword = document.getElementById("currentPassword").value;
+      qtLoader.module().JavaScriptAPI.changePassword(userName, newPassword, currPassword);
       popup.remove();
       sessionStorage.setItem('popupActive','inactive');
     });
