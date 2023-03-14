@@ -426,6 +426,15 @@ function clearPopups() {
   sessionStorage.setItem('popupActive','inactive');
 }
 
+window.addEventListener("resize", (event) => {
+  qtLoader.module().JavaScriptAPI.windowSizeChanged();
+  let active = sessionStorage.getItem("popupActive");
+  if (active == 'inactive')
+    return;
+  popup.style.width = windowWidth + "px";
+  popup.style.height = windowHeight + "px";
+});
+
 
 
 
