@@ -240,7 +240,7 @@ function openLoginPopup() {
     loginButton.addEventListener("click", function() { 
         var username = document.getElementById("usernameInput").value;
         var password = document.getElementById("passwordInput").value;
-        sendLoginDetails(username, password);
+        qtLoader.module().JavaScriptAPI.sendLoginData(username, password);  
         popup.remove();
         sessionStorage.setItem('popupActive','inactive');
     });
@@ -283,10 +283,6 @@ function openLoginPopup() {
   document.body.appendChild(popup);
 }
 
-function sendLoginDetails(username, password) {
-  qtLoader.module().JavaScriptAPI.sendLoginData(username, password);  
-}
-
 function openChangePasswordPopup(user, userOffset) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
@@ -306,14 +302,30 @@ function openChangePasswordPopup(user, userOffset) {
   .then(() => {
     document.getElementById("usernameDisplay").innerHTML = userName;
     var changePassword = document.getElementById("changePassButton");
+    changePassword.disabled = true;
     changePassword.addEventListener("click", function() {
       var newPassword = document.getElementById("newPassword").value;
-      // TODO Validate & send pasword change  
       popup.remove();
       sessionStorage.setItem('popupActive','inactive');
     });
     var currentPassword = document.getElementById("currentPassword");
     currentPassword.focus();
+
+    var passInput = document.getElementById("newPassword");
+    var passConfirm = document.getElementById("confirmPassword");
+    function checkInputs() {
+      if (currentPassword.value === '' 
+          || passInput.value === ''
+          || passConfirm.value === '') {
+          changePassword.disabled = true;
+      } 
+      else {
+        changePassword.disabled = false;
+      }
+    }
+    currentPassword.addEventListener('keyup', checkInputs);
+    passInput.addEventListener('keyup', checkInputs);
+    passConfirm.addEventListener('keyup', checkInputs);
   });
 
   popup.addEventListener('keydown', function(event) {
@@ -353,12 +365,13 @@ function openAddUserPopup() {
   .then(response => response.text())
   .then(text => popup.innerHTML = text)
   .then(() => {
-    var loginButton = document.getElementById("loginButton");
-    loginButton.disabled = true;
-    loginButton.addEventListener("click", function() { 
+    var addUserButton = document.getElementById("addUserButton");
+    addUserButton.disabled = true;
+    addUserButton.addEventListener("click", function() { 
         var username = document.getElementById("usernameInput").value;
         var password = document.getElementById("newPassword").value;
-        sendLoginDetails(username, password);
+        var role = document.getElementById("roleSelect").value;
+        qtLoader.module().JavaScriptAPI.addNewUser(username, password, role);
         popup.remove();
         sessionStorage.setItem('popupActive','inactive');
     });
@@ -369,14 +382,13 @@ function openAddUserPopup() {
     function checkInputs() {
       if (nameInput.value === '' 
           || passInput.value === ''
-          || passConfirm === '') {
-        loginButton.disabled = true;
+          || passConfirm.value === '') {
+          addUserButton.disabled = true;
       } 
       else {
-        loginButton.disabled = false;
+        addUserButton.disabled = false;
       }
     }
-    
     nameInput.addEventListener('keyup', checkInputs);
     passInput.addEventListener('keyup', checkInputs);
   });
