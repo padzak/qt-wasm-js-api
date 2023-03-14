@@ -142,3 +142,17 @@ input:focus {
 	right: 15px;
 	bottom: 10px;
 }
+
+.backBarMain {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+#backButton {
+	width: 100%;
+}
+
+#backButton:hover {
+	opacity: 0.5;
+}

@@ -3,6 +3,8 @@ let devices = new Map();
 let selectionLabels = [];
 let windowWidth = 0;
 let windowHeight = 0;
+let navBarWidth = 0;
+let alertBarHeight = 0;
 var popup;
 sessionStorage.setItem('popupActive','inactive');
 sessionStorage.setItem('backBarActive','inactive');
@@ -273,6 +275,8 @@ function openLoginPopup() {
   }
   document.addEventListener('click', handleCloseOnClick);
 
+  createBackButtonBar("Login");
+
   document.body.appendChild(popup);
 }
 
@@ -317,6 +321,9 @@ function openChangePasswordPopup(user, userOffset) {
         changePassword.disabled = false;
       }
     }
+
+    createBackButtonBar("Change Password");
+
     currentPassword.addEventListener('keyup', checkInputs);
     passInput.addEventListener('keyup', checkInputs);
     passConfirm.addEventListener('keyup', checkInputs);
@@ -403,43 +410,59 @@ function openAddUserPopup() {
   }
   document.addEventListener('click', handleCloseOnClick);
 
+  createBackButtonBar("Add User");
   document.body.appendChild(popup);
 }
 
 function createBackButtonBar(pageName) {
+  let active = sessionStorage.getItem("backBarActive");
+  if (active == 'active')
+    return;
+    
   backBar = document.createElement("div");
+  sessionStorage.setItem("backBarActive", "active");
   backBar.classList.add("backBar");
+  backBar.style.height = alertBarHeight;
   fetch("./html/popups/backBar.html")
   .then(response => response.text())
   .then(text => backBar.innerHTML = text)
   .then(() => {
     var name = document.getElementById("pageName");
     name.innerHTML = pageName;
+    var button = documen.getElementById("backButton");
+    button.style.width = navBarWidth + "px";
+    button.style.height = alertBarHeight + "px";
   });
-  sessionStorage.setItem('backBarActive','active');
 
+  document.appendChild(backBar);
 }
 
 function clearPopups() {
-  let active = sessionStorage.getItem('popupActive');
-  if (active == 'inactive')
-    return;
-  popup.remove();
+  let active = sessionStorage.getItem("popupActive");
+  if (active == 'active') {
+    popup.remove();
+  }
   sessionStorage.setItem('popupActive','inactive');
-  active = sessionStorage.getItem('backBarActive');
-  if (active === 'inactive')
-    return;
-  backBar.remove();
+  
+  active = sessionStorage.getItem("backBarActive");
+  if (active == 'active') {
+    backBar.remove();
+  }
   sessionStorage.setItem('backBarActive','inactive');
 }
 
 window.addEventListener("resize", (event) => {
   qtLoader.module().JavaScriptAPI.windowSizeChanged();
   let active = sessionStorage.getItem("popupActive");
-  if (active == 'inactive')
-    return;
-  popup.style.width = windowWidth + "px";
-  popup.style.height = windowHeight + "px";
+  if (active == 'active') {
+    popup.style.width = windowWidth + "px";
+    popup.style.height = windowHeight + "px";
+  }
+  active = sessionStorage.getItem("backBarActive");
+  if (active == 'active') {
+    backBar.style.width = navBarWidth + "px";
+    backBar.style.height = alertBarHeight + "px";
+  }
 });
 
 
