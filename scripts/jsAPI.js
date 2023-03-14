@@ -5,6 +5,7 @@ let windowWidth = 0;
 let windowHeight = 0;
 var popup;
 sessionStorage.setItem('popupActive','inactive');
+sessionStorage.setItem('backBarActive','inactive');
 
 function setWebSocketUrl(pointer, offset) {
   // wsUrl = qtLoader.module().UTF8ToString(pointer, offset);
@@ -405,12 +406,31 @@ function openAddUserPopup() {
   document.body.appendChild(popup);
 }
 
+function createBackButtonBar(pageName) {
+  backBar = document.createElement("div");
+  backBar.classList.add("backBar");
+  fetch("./html/popups/backBar.html")
+  .then(response => response.text())
+  .then(text => backBar.innerHTML = text)
+  .then(() => {
+    var name = document.getElementById("pageName");
+    name.innerHTML = pageName;
+  });
+  sessionStorage.setItem('backBarActive','active');
+
+}
+
 function clearPopups() {
   let active = sessionStorage.getItem('popupActive');
   if (active == 'inactive')
     return;
   popup.remove();
   sessionStorage.setItem('popupActive','inactive');
+  active = sessionStorage.getItem('backBarActive');
+  if (active === 'inactive')
+    return;
+  backBar.remove();
+  sessionStorage.setItem('backBarActive','inactive');
 }
 
 window.addEventListener("resize", (event) => {
