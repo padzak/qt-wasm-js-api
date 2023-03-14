@@ -154,16 +154,14 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, width) {
           // Code to handle text input when "Enter" is pressed
           var inputValue = textField.value;
           callbackFunction(inputValue);
-          popup.remove();
-          sessionStorage.setItem('popupActive','inactive');
+          clearPopups();
           // code to close the popup
       }
   });
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
     }
   });
 
@@ -200,16 +198,13 @@ function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
           // Code to handle text input when "Enter" is pressed
           var inputValue = textField.value;
           callbackFunction(inputValue);
-          popup.remove();
-          sessionStorage.setItem('popupActive','inactive');
-
+          clearPopups();
       }
   });
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
     }
   });
 
@@ -241,8 +236,7 @@ function openLoginPopup() {
         var username = document.getElementById("usernameInput").value;
         var password = document.getElementById("passwordInput").value;
         qtLoader.module().JavaScriptAPI.sendLoginData(username, password);  
-        popup.remove();
-        sessionStorage.setItem('popupActive','inactive');
+        clearPopups();
     });
     var nameInput = document.getElementById("usernameInput");
     nameInput.focus();
@@ -262,8 +256,7 @@ function openLoginPopup() {
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
     }
   });
 
@@ -273,8 +266,7 @@ function openLoginPopup() {
       firstClick = false;
       return;
     } else if (!popup.contains(event.target)) {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
       document.removeEventListener('click', handleCloseOnClick);
     }
   }
@@ -307,8 +299,7 @@ function openChangePasswordPopup(user, userOffset) {
       var newPassword = document.getElementById("newPassword").value;
       var currPassword = document.getElementById("currentPassword").value;
       qtLoader.module().JavaScriptAPI.changePassword(userName, newPassword, currPassword);
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
     });
     var currentPassword = document.getElementById("currentPassword");
     currentPassword.focus();
@@ -332,18 +323,17 @@ function openChangePasswordPopup(user, userOffset) {
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
     }
   });
+
   let firstClick = true;
   function handleCloseOnClick(event) {
     if (firstClick) {
       firstClick = false;
       return;
     } else if (!popup.contains(event.target)) {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
       document.removeEventListener('click', handleCloseOnClick);
     }
   }
@@ -374,8 +364,7 @@ function openAddUserPopup() {
         var password = document.getElementById("newPassword").value;
         var role = document.getElementById("roleSelect").value;
         qtLoader.module().JavaScriptAPI.addNewUser(username, password, role);
-        popup.remove();
-        sessionStorage.setItem('popupActive','inactive');
+        clearPopups();
     });
     var nameInput = document.getElementById("usernameInput");
     nameInput.focus();
@@ -397,8 +386,7 @@ function openAddUserPopup() {
 
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
     }
   });
 
@@ -408,8 +396,7 @@ function openAddUserPopup() {
       firstClick = false;
       return;
     } else if (!popup.contains(event.target)) {
-      popup.remove();
-      sessionStorage.setItem('popupActive','inactive');
+      clearPopups();
       document.removeEventListener('click', handleCloseOnClick);
     }
   }
