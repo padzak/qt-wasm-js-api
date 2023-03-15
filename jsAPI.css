@@ -143,16 +143,47 @@ input:focus {
 	bottom: 10px;
 }
 
-.backBarMain {
+.backBar {
+	background-color: #ffffff;
+	width: 500px;
 	position: absolute;
 	left: 0;
 	top: 0;
 }
 
+.backBarMain {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+
+}
+
+.title {
+	background-color: #2B3D5B;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%
+}
+
+#pageName {
+	width: 400px;
+	font-size: 45px;	
+
+	padding: 30px;
+	color: #ffffff;
+	font-family: "Open Sans", sans-serif;
+}
+
 #backButton {
-	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #80c4f9;
 }
 
 #backButton:hover {
 	opacity: 0.5;
 }
+
