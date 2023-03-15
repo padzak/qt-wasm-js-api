@@ -422,19 +422,20 @@ function createBackButtonBar(pageName) {
   backBar = document.createElement("div");
   sessionStorage.setItem("backBarActive", "active");
   backBar.classList.add("backBar");
-  backBar.style.height = alertBarHeight;
+  backBar.style.height = alertBarHeight + "px";
   fetch("./html/popups/backBar.html")
   .then(response => response.text())
   .then(text => backBar.innerHTML = text)
-  .then(() => {
-    var name = document.getElementById("pageName");
-    name.innerHTML = pageName;
-    var button = documen.getElementById("backButton");
+  .then(text => {
+    console.log("TEXT: " + text);
+    var displayName = document.getElementById("pageName");
+    displayName.innerHTML = pageName;
+    var button = document.getElementById("backButton");
     button.style.width = navBarWidth + "px";
     button.style.height = alertBarHeight + "px";
   });
-
-  document.appendChild(backBar);
+  
+  document.body.appendChild(backBar);
 }
 
 function clearPopups() {
@@ -460,8 +461,9 @@ window.addEventListener("resize", (event) => {
   }
   active = sessionStorage.getItem("backBarActive");
   if (active == 'active') {
-    backBar.style.width = navBarWidth + "px";
     backBar.style.height = alertBarHeight + "px";
+    var button = document.getElementById("backButton");
+    button.style.width = navBarWidth + "px";
   }
 });
 
