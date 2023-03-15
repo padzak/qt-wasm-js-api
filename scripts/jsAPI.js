@@ -223,7 +223,14 @@ function openLoginPopup() {
     return;
   }
   sessionStorage.setItem('popupActive','active');
-  
+
+  function sendLoginData() {
+    var username = document.getElementById("usernameInput").value;
+    var password = document.getElementById("passwordInput").value;
+    qtLoader.module().JavaScriptAPI.sendLoginData(username, password);  
+    clearPopups();
+  }
+
   popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
   popup.style.width = windowWidth + "px";
@@ -235,12 +242,7 @@ function openLoginPopup() {
   .then(() => {
     var loginButton = document.getElementById("loginButton");
     loginButton.disabled = true;
-    loginButton.addEventListener("click", function() { 
-        var username = document.getElementById("usernameInput").value;
-        var password = document.getElementById("passwordInput").value;
-        qtLoader.module().JavaScriptAPI.sendLoginData(username, password);  
-        clearPopups();
-    });
+    loginButton.addEventListener("click", sendLoginData);
     var nameInput = document.getElementById("usernameInput");
     nameInput.focus();
     var passInput = document.getElementById("passwordInput");
@@ -260,6 +262,9 @@ function openLoginPopup() {
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       clearPopups();
+    }
+    if (event.key === "Enter") {
+      sendLoginData();
     }
   });
 
@@ -424,8 +429,7 @@ function createBackButtonBar(pageName) {
   fetch("./html/popups/backBar.html")
   .then(response => response.text())
   .then(text => backBar.innerHTML = text)
-  .then(text => {
-    console.log("TEXT: " + text);
+  .then(() => {
     var displayName = document.getElementById("pageName");
     displayName.innerHTML = pageName;
     var button = document.getElementById("backButton");
