@@ -365,6 +365,14 @@ function openAddUserPopup() {
   }
   sessionStorage.setItem('popupActive','active');
   
+  function sendAddUser() {
+    var username = document.getElementById("usernameInput").value;
+    var password = document.getElementById("newPassword").value;
+    var role = document.getElementById("roleSelect").value;
+    qtLoader.module().JavaScriptAPI.addNewUser(username, password, role);
+    clearPopups();
+  }
+
   popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
   popup.style.width = windowWidth + "px";
@@ -376,13 +384,7 @@ function openAddUserPopup() {
   .then(() => {
     var addUserButton = document.getElementById("addUserButton");
     addUserButton.disabled = true;
-    addUserButton.addEventListener("click", function() { 
-        var username = document.getElementById("usernameInput").value;
-        var password = document.getElementById("newPassword").value;
-        var role = document.getElementById("roleSelect").value;
-        qtLoader.module().JavaScriptAPI.addNewUser(username, password, role);
-        clearPopups();
-    });
+    addUserButton.addEventListener("click", sendAddUser);
     var nameInput = document.getElementById("usernameInput");
     nameInput.focus();
     var passInput = document.getElementById("newPassword");
@@ -404,6 +406,9 @@ function openAddUserPopup() {
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       clearPopups();
+    }
+    if (event.key === 'Enter') {
+      sendAddUser();
     }
   });
 
