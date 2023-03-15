@@ -29,27 +29,27 @@ function setCurrentSensor(sensor, sensorOffset) {
   let storedSensor = sessionStorage.getItem('currentSensor');
 }
 
-function openSetStripSensor(x, y, value, index, name, nameOffset) {
+function openSetStripSensor(x, y, fontSize, value, index, name, nameOffset) {
   const sensorId = sessionStorage.getItem('currentSensor');
   const propName = qtLoader.module().UTF8ToString(name, nameOffset);
   createTextInputPopup((inputValue) => {
     qtLoader.module().JavaScriptAPI.setStripSensor(sensorId, index, propName, Number(inputValue));  
-  }, value, x, y);
+  }, value, x, y, fontSize, width);
 }
 
-function openSetLabel(x, y, width, devId, devIdOffset, devLabel, devLabelOffset) {
+function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLabelOffset) {
   const id = qtLoader.module().UTF8ToString(devId, devIdOffset);
   const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
-  }, label, x, y, width);
+  }, label, x, y, fontSize, width);
 }
 
-function openSetUnitName(x, y, unitName, unitNameOffset) {
+function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
   const name = qtLoader.module().UTF8ToString(unitName, unitNameOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setUnitName(inputText);  
-  }, name, x, y);
+  }, name, x, y, fontSize, width);
 }
 
 function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {
@@ -117,19 +117,20 @@ function setLabel(pointer, offset) {
   selectionLabels.push(label);
 }
 
-function openFirstArgCommand(x, y) {
+function openFirstArgCommand(x, y, fontSize, width) {
+  console.log("Open first argument popup");
   createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setFirstCmdValue(Number(value));  
-  }, "", x, y);
+  }, "", x, y, fontSize, width);
 }
 
-function openSecondArgCommand(x, y) { 
+function openSecondArgCommand(x, y, fontSize, width) { 
   createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setSecondCmdValue(Number(value));  
-  }, "", x ,y);
+  }, "", x ,y, fontSize, width);
 }
 
-function createTextInputPopup(callbackFunction, defaultText, x, y, width) {
+function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, width, classString) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
     return;
@@ -152,6 +153,7 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, width) {
   textField.type = "text";
   textField.classList.add("settingsTextField");
   textField.value = defaultText;
+  textField.style.fontSize = fontSize + "pt";
   textField.addEventListener("keydown", function(event) {
       if (event.keyCode === 13) {
           // Code to handle text input when "Enter" is pressed
