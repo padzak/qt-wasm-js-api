@@ -144,8 +144,6 @@ input:focus {
 }
 
 .backBar {
-	background-color: #ffffff;
-	width: 500px;
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -159,7 +157,7 @@ input:focus {
 }
 
 .title {
-	background-color: #2B3D5B;
+	background-color: #2B3648;
 	position: absolute;
 	display: flex;
 	align-items: center;
@@ -168,9 +166,9 @@ input:focus {
 }
 
 #pageName {
-	width: 400px;
+	width: 300px;
 	font-size: 45px;	
-
+	height: 50%;
 	padding: 30px;
 	color: #ffffff;
 	font-family: "Open Sans", sans-serif;
@@ -180,7 +178,7 @@ input:focus {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #80c4f9;
+	background-color: #212936;
 }
 
 #backButton:hover {
