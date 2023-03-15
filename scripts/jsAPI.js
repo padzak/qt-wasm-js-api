@@ -292,6 +292,13 @@ function openChangePasswordPopup(user, userOffset) {
   }
   sessionStorage.setItem('popupActive','active');
   
+  function sendChangePassword() {
+    var newPassword = document.getElementById("newPassword").value;
+    var currPassword = document.getElementById("currentPassword").value;
+    qtLoader.module().JavaScriptAPI.changePassword(userName, newPassword, currPassword);
+    clearPopups();
+  }
+
   const userName = qtLoader.module().UTF8ToString(user, userOffset);
   popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
@@ -305,12 +312,7 @@ function openChangePasswordPopup(user, userOffset) {
     document.getElementById("usernameDisplay").innerHTML = userName;
     var changePassword = document.getElementById("changePassButton");
     changePassword.disabled = true;
-    changePassword.addEventListener("click", function() {
-      var newPassword = document.getElementById("newPassword").value;
-      var currPassword = document.getElementById("currentPassword").value;
-      qtLoader.module().JavaScriptAPI.changePassword(userName, newPassword, currPassword);
-      clearPopups();
-    });
+    changePassword.addEventListener("click", sendChangePassword);
     var currentPassword = document.getElementById("currentPassword");
     currentPassword.focus();
 
@@ -335,6 +337,9 @@ function openChangePasswordPopup(user, userOffset) {
   popup.addEventListener('keydown', function(event) {
     if (event.key === "Escape") {
       clearPopups();
+    }
+    if (event.key === 'Enter') {
+      sendChangePassword();
     }
   });
 
