@@ -322,8 +322,6 @@ function openChangePasswordPopup(user, userOffset) {
       }
     }
 
-    createBackButtonBar("Change Password");
-
     currentPassword.addEventListener('keyup', checkInputs);
     passInput.addEventListener('keyup', checkInputs);
     passConfirm.addEventListener('keyup', checkInputs);
@@ -347,6 +345,7 @@ function openChangePasswordPopup(user, userOffset) {
   }
   document.addEventListener('click', handleCloseOnClick);
   document.body.appendChild(popup); 
+  createBackButtonBar("Change Password");
 }
 
 function openAddUserPopup() {
@@ -409,9 +408,8 @@ function openAddUserPopup() {
     }
   }
   document.addEventListener('click', handleCloseOnClick);
-
-  createBackButtonBar("Add User");
   document.body.appendChild(popup);
+  createBackButtonBar("Add User");
 }
 
 function createBackButtonBar(pageName) {

@@ -179,9 +179,9 @@ input:focus {
 	align-items: center;
 	justify-content: center;
 	background-color: #212936;
+	height: 40%;
 }
 
 #backButton:hover {
 	opacity: 0.5;
 }
-
