@@ -6,7 +6,10 @@ let windowHeight = 0;
 let navBarWidth = 0;
 let alertBarHeight = 0;
 var popup;
+var buttonGeneric;
+var backBar;
 sessionStorage.setItem('popupActive','inactive');
+sessionStorage.setItem('button','inactive');
 sessionStorage.setItem('backBarActive','inactive');
 
 function setWebSocketUrl(pointer, offset) {
@@ -173,6 +176,36 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
   popup.appendChild(textField);
   document.body.appendChild(popup);
   textField.focus();
+}
+
+function createButton(callbackFunction, buttonText, initialText, fontSize, x, y, width, height) {
+  var isActive = sessionStorage.getItem('button');
+  if (isActive == 'active') {
+    console.log("Button active");
+    return;
+  }
+  sessionStorage.setItem('button', 'active');
+  buttonGeneric = document.createElement("div");
+  buttonGeneric.classList.add("commonButton");
+  buttonGeneric.style.left = x + "px";
+  buttonGeneric.style.top = y + "px";
+  buttonGeneric.style.width = width + "px";
+  buttonGeneric.style.height = height + "px";
+  var button = document.createElement("button");
+  button.innerHTML = buttonText;
+  button.style.fontSize = fontSize;
+  var textInput = document.getElementById("textInput");
+  function checkInputs() {
+    if (textInput.value === initialText) {
+      button.disabled = true;
+    } 
+    else {
+      button.disabled = false;
+    }
+  }  
+  textInput.addEventListener('keyup', checkInputs);
+  button.addEventListener("click", callbackFunction);
+  document.body.appendChild(button);
 }
 
 function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
@@ -464,6 +497,12 @@ function clearPopups() {
     backBar.remove();
   }
   sessionStorage.setItem('backBarActive','inactive');
+
+  active = sessionStorage.getItem('button');
+  if (active == 'active') {
+    buttonGeneric.remove();
+  }
+  sessionStorage.setItem('button', 'active');
 }
 
 window.addEventListener("resize", (event) => {
