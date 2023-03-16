@@ -166,6 +166,8 @@ input:focus {
 }
 
 #pageName {
+	position: relative;
+	bottom: 10px;
 	width: 300px;
 	font-size: 45px;	
 	height: 50%;
