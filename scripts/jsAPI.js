@@ -40,12 +40,15 @@ function openSetStripSensor(x, y, fontSize, value, index, name, nameOffset) {
   }, value, x, y, fontSize, width);
 }
 
-function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLabelOffset) {
+function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLabelOffset, buttonX, buttonY, buttonWidth, buttonHeight) {
   const id = qtLoader.module().UTF8ToString(devId, devIdOffset);
   const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
   }, label, x, y, fontSize, width);
+  createButton((inputText) => {
+    qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
+  }, "Apply", label, fontSize, buttonX, buttonY, buttonWidth, buttonHeight);
 }
 
 function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
