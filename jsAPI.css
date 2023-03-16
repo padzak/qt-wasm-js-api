@@ -185,6 +185,12 @@ input:focus {
 	height: 40%;
 }
 
+#backArrow {
+	color: #ffffff;
+	position: relative;
+	left: 7px;
+}
+
 #backButton:hover {
-	opacity: 0.5;
+	background-color: #2B3D5B;
 }
