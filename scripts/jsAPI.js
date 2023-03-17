@@ -505,7 +505,7 @@ function clearPopups() {
   if (active == 'active') {
     buttonGeneric.remove();
   }
-  sessionStorage.setItem('button', 'active');
+  sessionStorage.setItem('button', 'inactive');
 }
 
 window.addEventListener("resize", (event) => {
