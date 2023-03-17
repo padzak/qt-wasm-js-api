@@ -143,6 +143,7 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
   }
   sessionStorage.setItem('popupActive','active');
   defaultText = typeof defaultText !== 'undefined' ? defaultText : "";
+  
   popup = document.createElement("div");
   popup.classList.add("commonPopup", "textInputPopup");
   if (x !== 'undefined' && y !== 'undefined') {
@@ -151,22 +152,28 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
   }
 
   if (width !== 'undefined') {
-    console.log("Setting width: " + width);
     popup.style.width = width + "px";
+  }
+
+  popup.style.fontSize = 27 + "pt";
+
+  if (classString !== undefined) {
+    popup.classList.add(classString);
   }
 
   var textField = document.createElement("input");
   textField.type = "text";
-  textField.classList.add("settingsTextField");
+  textField.classList.add("settingsTextField", "textInput");
+  textField.id = "textInput";
   textField.value = defaultText;
   textField.style.fontSize = fontSize + "pt";
+  textField.style.position = "relative";
+  textField.style.margin = 0 + "px";
   textField.addEventListener("keydown", function(event) {
       if (event.keyCode === 13) {
-          // Code to handle text input when "Enter" is pressed
           var inputValue = textField.value;
           callbackFunction(inputValue);
           clearPopups();
-          // code to close the popup
       }
   });
 
@@ -175,6 +182,18 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
       clearPopups();
     }
   });
+
+  let firstClick = true;
+  function handleCloseOnClick(event) {
+    if (firstClick) {
+      firstClick = false;
+      return;
+    } else if (!popup.contains(event.target)) {
+      clearPopups();
+      document.removeEventListener('click', handleCloseOnClick);
+    }
+  }
+  document.addEventListener('click', handleCloseOnClick);
 
   popup.appendChild(textField);
   document.body.appendChild(popup);
