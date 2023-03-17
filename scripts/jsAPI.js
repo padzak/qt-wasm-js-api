@@ -55,7 +55,7 @@ function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
   const name = qtLoader.module().UTF8ToString(unitName, unitNameOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setUnitName(inputText);  
-  }, name, x, y, fontSize, width);
+  }, name, (x + 3), (y + 9), fontSize, width);
 }
 
 function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {
