@@ -197,7 +197,7 @@ function createButton(callbackFunction, buttonText, initialText, fontSize, x, y,
   var button = document.createElement("button");
   button.innerHTML = buttonText;
   button.classList.add("commonButton");
-  button.style.fontSize = fontSize;
+  button.style.fontSize = fontSize + "pt";
   var textInput = document.getElementById("textInput");
   function checkInputs() {
     if (textInput.value === initialText) {
