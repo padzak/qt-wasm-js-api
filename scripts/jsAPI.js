@@ -189,13 +189,14 @@ function createButton(callbackFunction, buttonText, initialText, fontSize, x, y,
   }
   sessionStorage.setItem('button', 'active');
   buttonGeneric = document.createElement("div");
-  buttonGeneric.classList.add("commonButton");
+  buttonGeneric.style.position = "absolute";
   buttonGeneric.style.left = x + "px";
   buttonGeneric.style.top = y + "px";
   buttonGeneric.style.width = width + "px";
   buttonGeneric.style.height = height + "px";
   var button = document.createElement("button");
   button.innerHTML = buttonText;
+  button.classList.add("commonButton");
   button.style.fontSize = fontSize;
   var textInput = document.getElementById("textInput");
   function checkInputs() {
@@ -206,9 +207,10 @@ function createButton(callbackFunction, buttonText, initialText, fontSize, x, y,
       button.disabled = false;
     }
   }  
+  buttonGeneric.appendChild(button);
   textInput.addEventListener('keyup', checkInputs);
   button.addEventListener("click", callbackFunction);
-  document.body.appendChild(button);
+  document.body.appendChild(buttonGeneric);
 }
 
 function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
