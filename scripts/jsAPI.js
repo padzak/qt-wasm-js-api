@@ -184,20 +184,22 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
 function createButton(callbackFunction, buttonText, initialText, fontSize, x, y, width, height) {
   var isActive = sessionStorage.getItem('button');
   if (isActive == 'active') {
-    console.log("Button active");
     return;
   }
   sessionStorage.setItem('button', 'active');
   buttonGeneric = document.createElement("div");
   buttonGeneric.style.position = "absolute";
+
   buttonGeneric.style.left = x + "px";
   buttonGeneric.style.top = y + "px";
   buttonGeneric.style.width = width + "px";
   buttonGeneric.style.height = height + "px";
+  buttonGeneric.style.backgroundColor = "#212936";
   var button = document.createElement("button");
   button.innerHTML = buttonText;
   button.classList.add("commonButton");
   button.style.fontSize = fontSize + "pt";
+  button.disabled = true;
   var textInput = document.getElementById("textInput");
   function checkInputs() {
     if (textInput.value === initialText) {
