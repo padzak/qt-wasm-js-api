@@ -47,8 +47,9 @@ function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLa
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
   }, label, x, (y - 4), fontSize, width - 6);
   createButton((inputText) => {
-    qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
-  }, "Apply", label, (fontSize + 0.5), (buttonX + 6), buttonY, (buttonWidth - 12), buttonHeight);
+    var newLabel = document.getElementById("textInput").value;
+    qtLoader.module().JavaScriptAPI.setLabel(id, newLabel);
+    }, "Apply", label, (fontSize + 0.5), (buttonX + 6), buttonY, (buttonWidth - 12), buttonHeight);
 }
 
 function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
