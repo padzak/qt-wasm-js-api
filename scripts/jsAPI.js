@@ -222,17 +222,20 @@ function createButton(callbackFunction, buttonText, initialText, fontSize, x, y,
   button.disabled = true;
   var textInput = document.getElementById("textInput");
   function checkInputs() {
-    if (textInput.value === initialText) {
+    if (textInput.value === initialText && button.disabled === false) {
       button.disabled = true;
+      buttonGeneric.remove();
+      sessionStorage.setItem('button', 'inactive');
+      createButton(callbackFunction, buttonText, initialText, fontSize, x, y, width, height);
     } 
     else {
       button.disabled = false;
+      document.body.appendChild(buttonGeneric);
     }
   }  
   buttonGeneric.appendChild(button);
   textInput.addEventListener('keyup', checkInputs);
   button.addEventListener("click", callbackFunction);
-  document.body.appendChild(buttonGeneric);
 }
 
 function createLabeledTextInputPopup(callbackFunction, label, defaultText) {
