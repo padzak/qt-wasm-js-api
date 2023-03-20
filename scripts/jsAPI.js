@@ -45,11 +45,11 @@ function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLa
   const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
-  }, label, x, (y - 4), fontSize, width - 6);
-  createButton((inputText) => {
+  }, label, (x - 3), (y - 1), fontSize, width - 5);
+  createButton(() => {
     var newLabel = document.getElementById("textInput").value;
     qtLoader.module().JavaScriptAPI.setLabel(id, newLabel);
-    }, "Apply", label, (fontSize + 0.5), (buttonX + 6), buttonY, (buttonWidth - 12), buttonHeight);
+  }, "Apply", label, (fontSize + 0.5), (buttonX + 5), (buttonY - 1), (buttonWidth - 11), buttonHeight);
 }
 
 function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
