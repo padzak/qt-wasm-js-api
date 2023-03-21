@@ -1,0 +1,82 @@
+.commonPopup {
+	background: #212936;
+	color: #ffffff;
+}
+
+.commandPopup {
+	background: #242C3B
+}
+
+.textFieldLabeled {
+	color: #ffffff;
+}
+
+.textInput {
+	border-bottom: 1px solid #ffffff;
+	background-color: transparent;
+	color: #ffffff;
+}
+
+.stripSensorInput {
+	background-color: #2b3648;
+}
+
+input[type="text"] {
+  	border-bottom: 1px solid #ffffff;
+  	/* background-color: transparent; */
+}
+
+input[type="password"] {
+  	color: #ffffff;
+  	border-bottom: 1px solid #ffffff;
+  	background-color: transparent;
+}
+
+input:focus {
+	border-bottom: 2px solid #80c4f9;
+	caret-color: #80c4f9;
+}
+
+.settingsTextField {
+	/* background: #2b3648; */
+	color: #ffffff;
+}
+
+.title {
+	background-color: #2B3648;
+}
+
+.commonButton {
+	color: #ffffff;
+	background-color: #269af4;
+}
+
+.commonButton:active {
+	background-color: #80c4f9;
+}
+
+.commonButton:hover {
+	background-color: #4dacf6;
+}
+
+.commonButton:disabled {
+	opacity: 0.75;
+	background-color: #323D52;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+#pageName {
+	color: #ffffff;
+}
+
+#backButton {
+	background-color: #212936;
+}
+
+#backArrow {
+	color: #ffffff;
+}
+
+#backButton:hover {
+	background-color: #2B3D5B;
+}
