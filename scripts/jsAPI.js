@@ -124,17 +124,17 @@ function setLabel(pointer, offset) {
   selectionLabels.push(label);
 }
 
-function openFirstArgCommand(x, y, fontSize, width) {
+function openFirstArgCommand(x, y, fontSize, width, value) {
   console.log("Open first argument popup");
   createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setFirstCmdValue(Number(value));  
-  }, "", x, y, fontSize, width);
+  }, value, (x - 2), (y + 12), fontSize, width);
 }
 
-function openSecondArgCommand(x, y, fontSize, width) { 
+function openSecondArgCommand(x, y, fontSize, width, value) { 
   createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setSecondCmdValue(Number(value));  
-  }, "", (x - 3) ,(y + 12), fontSize, width);
+  }, value, (x - 3) ,(y + 12), fontSize, width);
 }
 
 function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, width, fontWeight, classList) {
