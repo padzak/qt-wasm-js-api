@@ -134,7 +134,7 @@ function openFirstArgCommand(x, y, fontSize, width) {
 function openSecondArgCommand(x, y, fontSize, width) { 
   createTextInputPopup((value) => {
     qtLoader.module().JavaScriptAPI.setSecondCmdValue(Number(value));  
-  }, "", x ,y, fontSize, width);
+  }, "", (x - 3) ,(y + 12), fontSize, width);
 }
 
 function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, width, fontWeight, classList) {
