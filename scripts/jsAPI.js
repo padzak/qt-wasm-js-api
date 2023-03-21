@@ -32,12 +32,12 @@ function setCurrentSensor(sensor, sensorOffset) {
   let storedSensor = sessionStorage.getItem('currentSensor');
 }
 
-function openSetStripSensor(x, y, fontSize, value, index, name, nameOffset) {
+function openSetStripSensor(x, y, fontSize, width, value, index, name, nameOffset) {
   const sensorId = sessionStorage.getItem('currentSensor');
   const propName = qtLoader.module().UTF8ToString(name, nameOffset);
   createTextInputPopup((inputValue) => {
     qtLoader.module().JavaScriptAPI.setStripSensor(sensorId, index, propName, Number(inputValue));  
-  }, value, x, y, fontSize, width);
+  }, value, x, (y - 14), fontSize, width, "normal", "stripSensorInput");
 }
 
 function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLabelOffset, buttonX, buttonY, buttonWidth, buttonHeight) {
@@ -56,7 +56,7 @@ function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
   const name = qtLoader.module().UTF8ToString(unitName, unitNameOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setUnitName(inputText);  
-  }, name, (x + 3), (y + 9), fontSize, width);
+  }, name, (x - 4), (y + 12), (fontSize - 0.75), width, 600);
 }
 
 function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {
@@ -137,7 +137,7 @@ function openSecondArgCommand(x, y, fontSize, width) {
   }, "", x ,y, fontSize, width);
 }
 
-function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, width, classString) {
+function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, width, fontWeight, classList) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
     return;
@@ -157,19 +157,23 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
   }
 
   popup.style.fontSize = 27 + "pt";
-
-  if (classString !== undefined) {
-    popup.classList.add(classString);
-  }
-
   var textField = document.createElement("input");
   textField.type = "text";
   textField.classList.add("settingsTextField", "textInput");
+  if (classList !== undefined) {
+    textField.classList.add(classList);
+  }
   textField.id = "textInput";
   textField.value = defaultText;
   textField.style.fontSize = fontSize + "pt";
   textField.style.position = "relative";
   textField.style.margin = 0 + "px";
+  if (fontWeight !== undefined) {
+    textField.style.fontWeight = fontWeight;
+  }
+  else {
+    textField.style.fontWeight = "normal";
+  }
   textField.addEventListener("keydown", function(event) {
       if (event.keyCode === 13) {
           var inputValue = textField.value;
