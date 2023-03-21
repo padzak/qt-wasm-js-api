@@ -122,7 +122,7 @@ input:focus {
 
 .settingsTextField {
 	width: 100%;
-	padding-bottom: 5px;
+	padding-bottom: 6px;
 	position: relative;
 	left: 1px;
 	bottom: 5px;
