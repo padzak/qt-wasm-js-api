@@ -80,3 +80,7 @@ input:focus {
 #backButton:hover {
 	background-color: #2B3D5B;
 }
+
+.genericButton {
+    background-color: #212936;
+}

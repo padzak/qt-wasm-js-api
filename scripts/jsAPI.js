@@ -49,7 +49,7 @@ function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLa
   createButton(() => {
     var newLabel = document.getElementById("textInput").value;
     qtLoader.module().JavaScriptAPI.setLabel(id, newLabel);  
-  }, "Apply", label, (fontSize + 0.5), (buttonX + 5), (buttonY - 1), (buttonWidth - 11), buttonHeight);
+  }, "Apply", label, (fontSize + 0.5), (buttonX + 5), buttonY, (buttonWidth - 11), buttonHeight, "applyButton");
 }
 
 function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
@@ -224,7 +224,7 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
   textField.focus();
 }
 
-function createButton(callbackFunction, buttonText, initialText, fontSize, x, y, width, height) {
+function createButton(callbackFunction, buttonText, initialText, fontSize, x, y, width, height, classList) {
   var isActive = sessionStorage.getItem('button');
   if (isActive == 'active') {
     return;
@@ -237,10 +237,13 @@ function createButton(callbackFunction, buttonText, initialText, fontSize, x, y,
   buttonGeneric.style.top = y + "px";
   buttonGeneric.style.width = width + "px";
   buttonGeneric.style.height = height + "px";
-  buttonGeneric.style.backgroundColor = "#212936";
+  buttonGeneric.classList.add("genericButton");
   var button = document.createElement("button");
   button.innerHTML = buttonText;
   button.classList.add("commonButton");
+  if (classList !== undefined) {
+    button.classList.add(classList);
+  }
   button.style.fontSize = fontSize + "pt";
   button.disabled = true;
   var textInput = document.getElementById("textInput");
@@ -249,7 +252,7 @@ function createButton(callbackFunction, buttonText, initialText, fontSize, x, y,
       button.disabled = true;
       buttonGeneric.remove();
       sessionStorage.setItem('button', 'inactive');
-      createButton(callbackFunction, buttonText, initialText, fontSize, x, y, width, height);
+      createButton(callbackFunction, buttonText, initialText, fontSize, x, y, width, height, classList);
     } 
     else {
       button.disabled = false;

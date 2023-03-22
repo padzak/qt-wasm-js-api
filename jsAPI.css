@@ -97,6 +97,10 @@
 	width: 220px;
 }
 
+.applyButton {
+	padding-bottom: 5px;
+}
+
 .loginPopup input[type="password"] {
 	font-size: 25px;
 	width: 220px;
