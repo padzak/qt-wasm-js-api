@@ -86,10 +86,6 @@
 	letter-spacing: 0.15rem;
 }
 
-.setUnitName {
-	padding-top: 5px;
-}
-
 .loginButton {
 	font-size: 25px;
 	padding: 5px 15px;
@@ -139,6 +135,10 @@ input:focus {
 	letter-spacing: 0.1rem;
 	left: 2px;
 	top: -4px;
+}
+
+.setUnitName {
+	padding-top: 5px;
 }
 
 .backBar {
