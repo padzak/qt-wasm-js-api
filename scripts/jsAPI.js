@@ -137,6 +137,10 @@ function openSecondArgCommand(x, y, fontSize, width, value) {
   }, value, (x - 3) ,(y + 12), fontSize, width);
 }
 
+function openHelp() {
+  window.open("./src/guide.pdf");
+}
+
 function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, width, fontWeight, classList) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
