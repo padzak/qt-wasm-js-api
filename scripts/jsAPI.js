@@ -141,6 +141,21 @@ function openHelp() {
   window.open("./src/guide.pdf");
 }
 
+function setTheme(type) {
+  var styleSheet = document.getElementById("themeStyle");
+  switch (type) {
+    case 0:
+      styleSheet.href = "./themes/standard.css";
+      break;
+    case 1:
+      styleSheet.href = "./themes/blueDark.css";
+      break;
+    case 2:
+      styleSheet.href = "./themes/blue.css";
+      break;
+  }
+}
+
 function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, width, fontWeight, classList) {
   var isActive = sessionStorage.getItem("popupActive");
   if (isActive == 'active') {
