@@ -83,6 +83,11 @@
 .stripSensorInput {
 	text-align: right;
 	padding-right: 3px;
+	letter-spacing: 0.15rem;
+}
+
+.setUnitName {
+	padding-top: 5px;
 }
 
 .loginButton {
