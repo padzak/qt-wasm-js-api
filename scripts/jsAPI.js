@@ -45,10 +45,10 @@ function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLa
   const label = qtLoader.module().UTF8ToString(devLabel, devLabelOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setLabel(id, inputText);  
-  }, label, (x - 3), (y - 1), fontSize, width - 5);
+  }, label, (x - 1), (y - 1), fontSize, width);
   createButton(() => {
     var newLabel = document.getElementById("textInput").value;
-    qtLoader.module().JavaScriptAPI.setLabel(id, newLabel);
+    qtLoader.module().JavaScriptAPI.setLabel(id, newLabel);  
   }, "Apply", label, (fontSize + 0.5), (buttonX + 5), (buttonY - 1), (buttonWidth - 11), buttonHeight);
 }
 
@@ -56,7 +56,7 @@ function openSetUnitName(x, y, fontSize, width, unitName, unitNameOffset) {
   const name = qtLoader.module().UTF8ToString(unitName, unitNameOffset);
   createTextInputPopup((inputText) => {
     qtLoader.module().JavaScriptAPI.setUnitName(inputText);  
-  }, name, (x - 4), (y + 9), (fontSize - 0.75), width, 600, "setUnitName");
+  }, name, (x - 1), (y + 12), (fontSize - 0.75), width, 600, "setUnitName");
 }
 
 function setSelection(deviceType, deviceId, signalId, ptrLabel, labelOffset, ptrUnit, unitOffset) {

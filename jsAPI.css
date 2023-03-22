@@ -82,7 +82,7 @@
 
 .stripSensorInput {
 	text-align: right;
-	padding-right: 3px;
+	padding: 0px 4px 5px 0px;
 	letter-spacing: 0.15rem;
 }
 
@@ -127,10 +127,18 @@ input:focus {
 
 .settingsTextField {
 	width: 100%;
-	padding-bottom: 6px;
+	padding: 0px 0px 6px 0px;
 	position: relative;
 	left: 1px;
 	bottom: 5px;
+}
+
+.stripSensorInput {
+	text-align: right;
+	padding: 0px 4px 5px 0px;
+	letter-spacing: 0.1rem;
+	left: 2px;
+	top: -4px;
 }
 
 .backBar {
