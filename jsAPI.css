@@ -30,6 +30,7 @@
 	justify-content: center;
 	bottom: 0;
 	right: 0;
+	flex: 0.23;
 }
 
 .loginPopup {
@@ -80,11 +81,7 @@
 	font-stretch: expanded;
 }
 
-.stripSensorInput {
-	text-align: right;
-	padding: 0px 4px 5px 0px;
-	letter-spacing: 0.15rem;
-}
+
 
 .loginButton {
 	font-size: 25px;
@@ -135,10 +132,10 @@ input:focus {
 
 .stripSensorInput {
 	text-align: right;
-	padding: 0px 4px 5px 0px;
+	padding: 0px 3px 5px 0px;
 	letter-spacing: 0.1rem;
-	left: 2px;
-	top: -4px;
+	top: -6px;
+	left: -3px;
 }
 
 .setUnitName {
