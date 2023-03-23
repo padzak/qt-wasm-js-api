@@ -18,7 +18,7 @@
 }
 
 .stripSensorInput {
-	background-color: #eef0f0;
+	background-color: #3c474d;
 }
 
 input[type="text"] {
@@ -58,8 +58,8 @@ input:focus {
 }
 
 .commonButton:disabled {
-    opacity: 0.75;
-	background-color: #323D52;
+    opacity: 0.4;
+	background-color: #5c7b8387;
     color: rgba(255, 255, 255, 0.5);
 }
 
