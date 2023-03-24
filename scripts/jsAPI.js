@@ -451,6 +451,9 @@ function openChangePasswordPopup(user, userOffset) {
   document.addEventListener('click', handleCloseOnClick);
   document.body.appendChild(popup); 
   createBackButtonBar("Change Password");
+  setTimeout(() => {
+    popup.classList.add("visible");
+  }, 60);
 }
 
 function openAddUserPopup() {
@@ -520,6 +523,9 @@ function openAddUserPopup() {
   document.addEventListener('click', handleCloseOnClick);
   document.body.appendChild(popup);
   createBackButtonBar("Add User");
+  setTimeout(() => {
+    popup.classList.add("visible");
+  }, 60);
 }
 
 function createBackButtonBar(pageName) {
