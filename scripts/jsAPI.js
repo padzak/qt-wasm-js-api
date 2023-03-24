@@ -18,11 +18,14 @@ function setWebSocketUrl(pointer, offset) {
   console.log(wsUrl);
 }
 
-function setWindowHeight(alertBarHeight) { 
-  windowHeight = window.innerHeight - alertBarHeight;
+function setWindowHeight(alertHeight) { 
+  alertBarHeight = alertHeight;
+  windowHeight = window.innerHeight - alertHeight;
+  document.documentElement.style.setProperty(`--popupHeight`, `${windowHeight + "px"}`); 
 }
 
-function setWindowWidth(navBarWidth) { 
+function setWindowWidth(navWidth) { 
+  navBarWidth = navWidth;
   windowWidth = window.innerWidth - navBarWidth;
 }
 
@@ -313,7 +316,11 @@ function openLoginPopup() {
   if (isActive == 'active') {
     return;
   }
-  sessionStorage.setItem('popupActive','active');
+
+  popup = document.createElement("div");
+  popup.classList.add("commonPopup", "loginPopup");
+  popup.style.top = alertBarHeight + "px";
+  popup.style.width = (windowWidth - 2) + "px";
 
   function sendLoginData() {
     var username = document.getElementById("usernameInput").value;
@@ -321,11 +328,6 @@ function openLoginPopup() {
     qtLoader.module().JavaScriptAPI.sendLoginData(username, password);  
     clearPopups();
   }
-
-  popup = document.createElement("div");
-  popup.classList.add("commonPopup", "loginPopup");
-  popup.style.width = windowWidth + "px";
-  popup.style.height = windowHeight + "px";
 
   fetch('./html/popups/loginPopup.html')
   .then(response => response.text())
@@ -370,10 +372,12 @@ function openLoginPopup() {
     }
   }
   document.addEventListener('click', handleCloseOnClick);
-
-  createBackButtonBar("Login");
-
   document.body.appendChild(popup);
+  sessionStorage.setItem('popupActive','active');
+  createBackButtonBar("Login");
+  setTimeout(() => {
+    popup.classList.add("visible");
+  }, 60);
 }
 
 function openChangePasswordPopup(user, userOffset) {

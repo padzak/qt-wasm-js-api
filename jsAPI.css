@@ -9,17 +9,38 @@
   }
 } */
 
+:root {
+	--startHeight: 0px;
+	--endHeight: 250px;
+	--startTop: -50px;
+	--endTop: 20px;
+  }
+  
 @keyframes expand {
-	0% {
+	from {
 		height: var(--startHeight);
+		top: var(--startTop);
+		opacity: 0;
 	}
-	100% {
+	to {
 		height: var(--endHeight);
+		top: var(--endTop);
+		opacity: 1;
+	}
+}
+@keyframes slide-down {
+	from {
+		transform: translateY(-90%);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
 	}
 }
 
 .commonPopup {
-	font-family: "Open Sans", serif;
+	font-family: "Open Sans", sans-serif;
 	position: absolute;
 }
 
@@ -31,17 +52,27 @@
 	bottom: 0;
 	right: 0;
 	flex: 0.23;
-}
-
+  }
+  
 .loginPopup {
 	font-size: 25px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	bottom: 0;
+	position: absolute;
 	right: 0;
-	animation: expand 0.5s ease-in-out;
+	width: 100%;
+	transform: translateY(0px); /* move the div up by 100% of its height */
+	transition: all 0.2s ease-out;
+	height: 0px;
+	opacity: 0;
+}
+
+.visible {
+	height: var(--popupHeight);
+	opacity: 1;
+	transform: translateY(0); /* move the div down to its final position */
 }
 
 .textInputPopup {
