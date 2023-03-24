@@ -397,8 +397,8 @@ function openChangePasswordPopup(user, userOffset) {
   const userName = qtLoader.module().UTF8ToString(user, userOffset);
   popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
-  popup.style.width = windowWidth + "px";
-  popup.style.height = windowHeight + "px";
+  popup.style.top = alertBarHeight + "px";
+  popup.style.width = (windowWidth - 2) + "px";
 
   fetch('./html/popups/changePasswordPopup.html')
   .then(response => response.text())
@@ -473,8 +473,8 @@ function openAddUserPopup() {
 
   popup = document.createElement("div");
   popup.classList.add("commonPopup", "loginPopup");
-  popup.style.width = windowWidth + "px";
-  popup.style.height = windowHeight + "px";
+  popup.style.top = alertBarHeight + "px";
+  popup.style.width = (windowWidth - 2) + "px";
 
   fetch('./html/popups/addNewUser.html')
   .then(response => response.text())
