@@ -52,6 +52,7 @@ function openSetLabel(x, y, fontSize, width, devId, devIdOffset, devLabel, devLa
   createButton(() => {
     var newLabel = document.getElementById("textInput").value;
     qtLoader.module().JavaScriptAPI.setLabel(id, newLabel);  
+    clearPopups(); 
   }, "Apply", label, (fontSize + 0.5), (buttonX + 5), buttonY, (buttonWidth - 11), buttonHeight, "applyButton");
 }
 
