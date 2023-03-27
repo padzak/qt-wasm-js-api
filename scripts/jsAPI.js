@@ -210,18 +210,6 @@ function createTextInputPopup(callbackFunction, defaultText, x, y, fontSize, wid
     }
   });
 
-  let firstClick = true;
-  function handleCloseOnClick(event) {
-    if (firstClick) {
-      firstClick = false;
-      return;
-    } else if (!popup.contains(event.target)) {
-      clearPopups();
-      document.removeEventListener('click', handleCloseOnClick);
-    }
-  }
-  document.addEventListener('click', handleCloseOnClick);
-
   popup.appendChild(textField);
   document.body.appendChild(popup);
   textField.focus();
